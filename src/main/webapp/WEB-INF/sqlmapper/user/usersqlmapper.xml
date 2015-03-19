@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserDao">
+	<resultMap id="User" type="com.entity.User">
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="findByEmail" parameterType="java.lang.String" resultType="com.entity.User">
+		select * from "ALLEN"."USER" where email=#{email}
+	</select>
+	<insert id="insertUser" parameterType="com.entity.User">
+		insert into "ALLEN"."USER" values(#{email},#{password})
+	</insert>
+</mapper>
