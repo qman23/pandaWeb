@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-
 <title>Welcome to Panda</title>
 <%
 	String path = request.getContextPath();
@@ -71,7 +70,7 @@ body {
 <script>
 $(document).ready(function(){
 	$("#cancel").click(function(){
-		window.location.href="login.html";
+		window.location.href="<%=basePath%>login.do";
 	});
 })
 </script>
@@ -80,8 +79,7 @@ $(document).ready(function(){
 <body>
 
 	<div class="container" >
-
-		<form class="form-signin" action="<%=basePath%>/register.do" method="post">
+		<form class="form-signin" action="<%=basePath%>register.do" method="post">
 			<h2 class="form-signin-heading">Please register</h2>
 			<label for="inputEmail" class="sr-only">Email address</label> <input
 				type="email" id="email" name="email" class="form-control"

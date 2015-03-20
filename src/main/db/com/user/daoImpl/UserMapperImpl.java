@@ -16,12 +16,12 @@ public class UserMapperImpl implements UserDao{
 
 	public User findByEmail(String email) {
 		SqlSession session=sqlSessionFactory.openSession();
-		return session.selectOne("UserDao.findByEmail", email);
+		return session.selectOne("userDao.findByEmail", email);
 	}
 
 	public void insertUser(User user) {
 		SqlSession session=sqlSessionFactory.openSession();
-		 session.insert("UserDao.insertUser", user);		
+		 session.insert("userDao.insertUser", user);		
 	}
 	
 }

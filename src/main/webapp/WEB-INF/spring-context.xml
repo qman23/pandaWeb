@@ -30,14 +30,15 @@
 	</bean>
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation" value="/WEB-INF/sqlconfig/sqlmapconfig.xml"></property>
-		<property name="mapperLocations" value="/WEB-INF/sqlmapper/**/*mapper.xml"></property>
+		<property name="configLocation" value="classpath:sqlconfig/sqlmapconfig.xml"></property>
+		<property name="mapperLocations" value="classpath:sqlmapper/**/*mapper.xml"></property>
 	</bean>
 	<bean
 		class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
 	<context:component-scan base-package="com.login.*" />
 	<context:component-scan base-package="com.user.*" />
 	<context:component-scan base-package="com.entity" />
+	<context:component-scan base-package="com.shiro.*" />
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />

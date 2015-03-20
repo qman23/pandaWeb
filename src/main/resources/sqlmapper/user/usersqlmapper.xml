@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userDao">
+	<resultMap id="UserMap" type="com.entity.User">
+		<id column="USER_ID" property="userid"  />
+		<result column="USER_EMAIL" property="email"/>
+		<result column="USER_PASSWORD" property="password" />
+	</resultMap>
+	<sql id='TABLE_NAME'>USER</sql>
+	<sql id='defaultSchema'>Allen</sql>
+	<select id="findByEmail" parameterType="java.lang.String" resultMap="UserMap">
+		select * from <include refid="TABLE_NAME" /> where USER_EMAIL=#{email}
+	</select>
+	<insert id="insertUser" parameterType="com.entity.User">
+		insert into <include refid="TABLE_NAME" />(USER_EMAIL,USER_PASSWORD) values(#{email},#{password})
+	</insert>
+</mapper>
