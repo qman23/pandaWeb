@@ -1,12 +1,8 @@
-
-<!DOCTYPE html>
-<html lang="en">
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ page isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<html>
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
 <title>Welcome to Panda</title>
 <%
 	String path = request.getContextPath();
@@ -63,40 +59,60 @@ body {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 }
-#register{
-	margin-top:10px;
+
+#register {
+	margin-top: 10px;
 }
 </style>
 <script>
 $(document).ready(function(){
 	$("#cancel").click(function(){
 		window.location.href="<%=basePath%>login.do";
-	});
-})
+		});
+	$('#confirmPassword').blur(function(){
+			$('#messageDiv').html('');
+			if($('input[id=password]').val()!=$('input[id=confirmPassword]').val()){
+				$('#messageDiv').html("<div class='alert alert-danger' role='alert'>"+
+				"<span class='glyphicon glyphicon-info-sign' aria-hidden='true'></span> Please Confirm Your Password!</div>");
+			}
+		});
+	})
 </script>
 </head>
 
 <body>
 
-	<div class="container" >
-		<form class="form-signin" action="<%=basePath%>register.do" method="post">
+	<div class="container">
+		<form class="form-signin" action="<%=basePath%>register.do"
+			method="post">
 			<h2 class="form-signin-heading">Please register</h2>
 			<label for="inputEmail" class="sr-only">Email address</label> <input
 				type="email" id="email" name="email" class="form-control"
-				placeholder="Email address" required autofocus> 
-			<label
+				placeholder="Email address" required autofocus> <label
 				for="inputPassword" class="sr-only">Password</label> <input
 				type="password" id="password" name="password" class="form-control"
-				placeholder="Password" required>
-			<label
-				for="inputPassword" class="sr-only">Confirm Password</label> <input
-				type="password" id="inputPassword" class="form-control"
-				placeholder="Password" required>
-				
-			<button class="btn btn-lg btn-primary btn-block" id="register" type="submit">Register</button>
-			<button class="btn btn-lg btn-primary btn-block" id="cancel" type="button">Cancel</button>
-		</form>
+				placeholder="Password" required> <label for="inputPassword"
+				class="sr-only">Confirm Password</label> <input type="password"
+				id="confirmPassword" class="form-control" placeholder="Password"
+				required>
 
+			<button class="btn btn-lg btn-primary btn-block" id="register"
+				type="submit">Register</button>
+			<button class="btn btn-lg btn-primary btn-block" id="cancel"
+				type="button">Cancel</button>
+			
+		</form>
+		<div class="row">
+		<div class="col-md-4"></div>
+			<div class="col-md-4" id="messageDiv">
+				<c:if test="${not empty message  }">
+					<div class="alert alert-danger" role="alert">
+						<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+						${message}
+					</div>
+				</c:if>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

@@ -20,21 +20,24 @@ import com.login.bussiness.UserService;
 
 public class PandaRealm extends AuthorizingRealm {
 
-    static Logger logger=Logger.getLogger(PandaRealm.class.getName()); 
-	
+	static Logger logger = Logger.getLogger(PandaRealm.class.getName());
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principals) {
 		String currentUsername = (String) super
 				.getAvailablePrincipal(principals);
+		logger.debug("Begin get user role and permission from database-----------------");
 		SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();
 		if (null != currentUsername) {
 			simpleAuthorInfo.addRole("admin");
-			simpleAuthorInfo.addStringPermission("admin:manage");
+			logger.debug("Begin add user role admin -----------------");
+			//simpleAuthorInfo.addStringPermission("admin:worker");
 		}
+		logger.debug("Get user role and permission from database compelate-----------------");
 		return simpleAuthorInfo;
 	}
 
@@ -42,13 +45,25 @@ public class PandaRealm extends AuthorizingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken authcToken) throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-		logger.debug("Current get token user:"+ token.toString());
-		User user=userService.findByEmail(token.getUsername());
-		if (user!=null) {
+		logger.debug("--------------Current get token user:" + token.toString()
+				+ "---------------");
+		User user = userService.findByEmail(token.getUsername());
+		if (user != null) {
 			AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(
 					user.getEmail(), user.getPassword(), this.getName());
+			setSession("CurrentUser", user.getEmail());
 			return authcInfo;
 		}
 		return null;
+	}
+
+	private void setSession(Object key, Object value) {
+		Subject currentUser = SecurityUtils.getSubject();
+		if (null != currentUser) {
+			Session session = currentUser.getSession();
+			if (null != session) {
+				session.setAttribute(key, value);
+			}
+		}
 	}
 }

@@ -47,7 +47,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Panda</a>
+				<a class="navbar-brand" href="index.do">Panda</a>
 			</div>
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
@@ -63,7 +63,7 @@
 							class="sr-only">(current)</span></a></li>
 					<li><a href="#">help</a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-expanded="false">Profile
+						data-toggle="dropdown" role="button" aria-expanded="false">Action
 							<span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu" role="menu">
@@ -73,7 +73,7 @@
 							<li class="divider"></li>
 							<li><a href="#">Separated link</a></li>
 							<li class="divider"></li>
-							<li><a href="#">One more separated link</a></li>
+							<li><a href="<%=basePath%>logout.do">logout</a></li>
 						</ul></li>
 				</ul>
 			</div>

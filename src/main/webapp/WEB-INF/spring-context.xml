@@ -26,7 +26,7 @@
 		<property name="maxIdle" value="100" />        <!-- 队列中的最大等待数 -->
 		<property name="maxWait" value="10000" />        <!-- 最长等待时间，单位毫秒 -->
 		<property name="maxActive" value="50" />    <!-- 最大活跃数 -->
-		<property name="initialSize" value="10" />
+		<property name="initialSize" value="10" /> <!-- 初始活跃数 -->
 	</bean>
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />

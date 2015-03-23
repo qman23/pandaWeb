@@ -14,7 +14,11 @@ public class User {
 	private String email;
 	private String password;
 	private List<Role> roles;
-	public User(){}
+	private boolean rememberMe;
+
+	public User() {
+	}
+
 	public List<Role> getRoles() {
 		return roles;
 	}
@@ -47,4 +51,11 @@ public class User {
 		this.userid = userid;
 	}
 
+	public boolean isRememberMe() {
+		return rememberMe;
+	}
+
+	public void setRememberMe(boolean rememberMe) {
+		this.rememberMe = rememberMe;
+	}
 }
