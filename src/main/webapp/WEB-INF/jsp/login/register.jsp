@@ -14,56 +14,39 @@
 <link rel="stylesheet" href="<%=basePath%>style/css/bootstrap.min.css">
 <script src="<%=basePath%>style/js/jquery-1.11.2.min.js"></script>
 <script src="<%=basePath%>style/js/bootstrap.min.js"></script>
-<style>
-body {
-	padding-top: 40px;
-	padding-bottom: 40px;
-	background-color: #eee;
-}
+ <style type="text/css">
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
 
-.form-signin {
-	max-width: 330px;
-	padding: 15px;
-	margin: 0 auto;
-}
-
-.form-signin .form-signin-heading, .form-signin .checkbox {
-	margin-bottom: 10px;
-}
-
-.form-signin .checkbox {
-	font-weight: normal;
-}
-
-.form-signin .form-control {
-	position: relative;
-	height: auto;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	padding: 10px;
-	font-size: 16px;
-}
-
-.form-signin .form-control:focus {
-	z-index: 2;
-}
-
-.form-signin input[type="email"] {
-	margin-bottom: -1px;
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
-}
-
-.form-signin input[type="password"] {
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
-}
-
-#register {
-	margin-top: 10px;
-}
-</style>
+      .form-signin {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        margin-top:10px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+    </style>
 <script>
 $(document).ready(function(){
 	$("#cancel").click(function(){
@@ -79,7 +62,6 @@ $(document).ready(function(){
 	})
 </script>
 </head>
-
 <body>
 
 	<div class="container">
@@ -93,7 +75,7 @@ $(document).ready(function(){
 				type="password" id="password" name="password" class="form-control"
 				placeholder="Password" required> <label for="inputPassword"
 				class="sr-only">Confirm Password</label> <input type="password"
-				id="confirmPassword" class="form-control" placeholder="Password"
+				id="confirmPassword" class="form-control" placeholder="Confirm Password"
 				required>
 
 			<button class="btn btn-lg btn-primary btn-block" id="register"

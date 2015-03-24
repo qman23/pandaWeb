@@ -7,11 +7,11 @@
 		<result column="USER_PASSWORD" property="password" />
 	</resultMap>
 	<sql id='TABLE_NAME'>USER</sql>
-	<sql id='defaultSchema'>Allen</sql>
+	<sql id='defaultSchema'>PANDA</sql>
 	<select id="findByEmail" parameterType="java.lang.String" resultMap="UserMap">
-		select * from <include refid="TABLE_NAME" /> where USER_EMAIL=#{email}
+		select * from <include refid="defaultSchema" />.<include refid="TABLE_NAME" /> where USER_EMAIL=#{email}
 	</select>
 	<insert id="insertUser" parameterType="com.entity.User">
-		insert into <include refid="TABLE_NAME" />(USER_EMAIL,USER_PASSWORD) values(#{email},#{password})
+		insert into <include refid="defaultSchema" />.<include refid="TABLE_NAME" />(USER_EMAIL,USER_PASSWORD) values(#{email},#{password})
 	</insert>
 </mapper>

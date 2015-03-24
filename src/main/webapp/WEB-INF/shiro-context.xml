@@ -21,27 +21,11 @@
 	<!-- 继承自AuthorizingRealm的自定义Realm,即指定Shiro验证用户登录的类为自定义的ShiroDbRealm.java -->
 	<bean id="pandaRealm" class="com.shiro.realm.PandaRealm" />
 	
-	<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-		<constructor-arg value="sid" />
-		<property name="httpOnly" value="true" />
-		<property name="maxAge" value="-1" />
-	</bean>
-	<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-		<constructor-arg value="rememberMe" />
-		<property name="httpOnly" value="true" />
-		<property name="maxAge" value="604800" /><!-- 30天 -->
-	</bean>
-	<!-- rememberMe管理器 -->
-	<bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
-		<property name="cipherKey"
-			value="#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}" />
-		<property name="cookie" ref="rememberMeCookie" />
-	</bean>
 
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-		<property name="rememberMeManager" ref="rememberMeManager"/> 
 		<property name="realm" ref="pandaRealm" />
 	</bean>
+
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<!-- Shiro的核心安全接口,这个属性是必须的 -->
 		<property name="securityManager" ref="securityManager" />
@@ -50,7 +34,6 @@
 		<!-- 用户访问未对其授权的资源时,所显示的连接 -->
 		<!-- 若想更明显的测试此属性可以修改它的值,如unauthor.jsp,然后用[玄玉]登录后访问/admin/listUser.jsp就看见浏览器会显示unauthor.jsp -->
 		<property name="unauthorizedUrl" value="/" />
-
 		<property name="filterChainDefinitions">
 			<value>
 				/login.do=anon
@@ -71,6 +54,4 @@
 	<!-- <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" 
 		depends-on="lifecycleBeanPostProcessor"/> <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor"> 
 		<property name="securityManager" ref="securityManager"/> </bean> -->
-
-
 </beans>
