@@ -16,18 +16,21 @@ public class homeController extends ActionController {
 	@RequestMapping("/home/spv.do")
 	public String spvActionMethod(Model model) {
 		model.addAttribute("spvClass", "active");
+		model.addAttribute("PCcurrentTab","in");
 		return "spv";
 	}
 
 	@RequestMapping("/home/sprt.do")
 	public String sprtActionMethod(Model model) {
 		model.addAttribute("sprtClass", "active");
+		model.addAttribute("PCcurrentTab","in");
 		return "sprt";
 	}
 
 	@RequestMapping("/home/reports.do")
 	public String reportsActionMethod(Model model) {
 		model.addAttribute("reportClass", "active");
+		model.addAttribute("PCcurrentTab","in");
 		return "reports";
 	}
 }

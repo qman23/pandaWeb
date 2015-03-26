@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="<%=basePath%>style/css/bootstrap.min.css">
 <script src="<%=basePath%>style/js/jquery-1.11.2.min.js"></script>
 <script src="<%=basePath%>style/js/bootstrap.min.js"></script>
+<link rel="shortcut icon" type="image/x-icon" href="<%=basePath%>style/img/ruyo_net_w_32.png" media="screen" /> 
  <style type="text/css">
       body {
         padding-top: 40px;

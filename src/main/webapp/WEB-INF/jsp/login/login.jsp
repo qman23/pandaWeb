@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="<%=basePath%>style/css/bootstrap.min.css">
 <script src="<%=basePath%>style/js/jquery-1.11.2.min.js"></script>
 <script src="<%=basePath%>style/js/bootstrap.min.js"></script>
+<link rel="shortcut icon" type="image/x-icon" href="<%=basePath%>style/img/ruyo_net_w_32.png" media="screen" /> 
   <style type="text/css">
       body {
         padding-top: 40px;
@@ -52,6 +53,9 @@ $(document).ready(function(){
 	$("#register").click(function(){
 		window.location.href="<%=basePath%>register.do";
 	});
+	$('#change').click(function(){
+		window.location.href="<%=basePath%>changePwd.do";
+	});
 })
 </script>
 </head>
@@ -76,12 +80,14 @@ $(document).ready(function(){
 				type="submit">Sign in</button>
 			<button class="btn btn-lg btn-primary btn-block" id="register"
 				type="button">Register</button>
+			<button class="btn btn-lg btn-primary btn-block" id="change"
+				type="button">Change</button>
 		</form>
 		<div class="row">
 			<div class="col-md-4"></div>
 			<div class="col-md-4" id="messageDiv">
 				<c:if test="${not empty message  }">
-					<div class="alert alert-danger" role="alert">
+					<div class="alert alert-${messageType}" role="alert">
 						<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
 						${message}
 					</div>

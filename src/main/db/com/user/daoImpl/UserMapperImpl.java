@@ -1,5 +1,7 @@
 package com.user.daoImpl;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,16 @@ public class UserMapperImpl implements UserDao{
 	public void insertUser(User user) {
 		SqlSession session=sqlSessionFactory.openSession();
 		 session.insert("userDao.insertUser", user);		
+	}
+
+	public void updateUser(User user) {
+		SqlSession session=sqlSessionFactory.openSession();
+		session.update("userDao.updateUser",user);
+	}
+
+	public List<User> findAllUser() {
+		SqlSession session=sqlSessionFactory.openSession();
+		return session.selectList("userDao.findAllUser", null);
 	}
 	
 }

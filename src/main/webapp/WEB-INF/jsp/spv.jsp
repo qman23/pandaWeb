@@ -1,155 +1,52 @@
 <body>
 	<div class="col-md-10 col-md-offset-3  col-md-offset-2 main">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				Web
-				<button type="button" class="btn btn-default navbar-btn">Begin
-					Check</button>
-			</div>
-			<div class="panel-body">
-
-				<div class="row placeholders">
-					<div class="col-xs-6 col-md-4 placeholder">
-						<a href="#"><span class="glyphicon glyphicon-globe"
-							aria-hidden="true"></span></a>
-						<h4>Production Web Status</h4>
-						<p>
-							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-						</p>
-						<p>
-							<a class="btn btn-default" href="#" role="button">Check
-								&raquo;</a> <a class="btn btn-default" href="#" role="button">View
-								details &raquo;</a>
-						</p>
-					</div>
-					<div class="col-xs-6 col-md-4 placeholder">
-						<a href="#"><span class="glyphicon glyphicon-globe"
-							aria-hidden="true"></span></a>
-						<h4>CDT Web Status</h4>
-						<p>
-							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-						</p>
-						<p>
-							<a class="btn btn-default" href="#" role="button">Check
-								&raquo;</a> <a class="btn btn-default" href="#" role="button">View
-								details &raquo;</a>
-						</p>
-					</div>
-					<div class="col-xs-6 col-md-4 placeholder">
-						<a href="#"><span class="glyphicon glyphicon-globe"
-							aria-hidden="true"></span></a>
-						<h4>DST Web Status</h4>
-						<p>
-							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-						</p>
-						<p>
-							<a class="btn btn-default" href="#" role="button">Check
-								&raquo;</a> <a class="btn btn-default" href="#" role="button">View
-								details &raquo;</a>
-						</p>
-					</div>
-				</div>
+		<div id="custom-toolbar">
+			<div class="form-inline" role="form">
+				<button class="btn btn-primary btn-lg" data-toggle="modal"
+					data-target="#myModal">New Task</button>
 			</div>
 		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				Db
-				<button type="button" class="btn btn-default navbar-btn">Begin
-					Check</button>
-			</div>
-			<div class="panel-body">
-				<div class="row placeholders">
-					<div class="col-xs-6 col-md-4 placeholder">
-						<a href="#"><span class="glyphicon glyphicon-th"
-							aria-hidden="true"></span></a>
-						<h4>Production db Status</h4>
-						<p>
-							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-						</p>
-						<p>
-							<a class="btn btn-default" href="#" role="button">Check
-								&raquo;</a> <a class="btn btn-default" href="#" role="button">View
-								details &raquo;</a>
-						</p>
-					</div>
-					<div class="col-xs-6 col-md-4 placeholder">
-						<a href="#"><span class="glyphicon glyphicon-th"
-							aria-hidden="true"></span></a>
-						<h4>CDT db Status</h4>
-						<p>
-							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-						</p>
-						<p>
-							<a class="btn btn-default" href="#" role="button">Check
-								&raquo;</a> <a class="btn btn-default" href="#" role="button">View
-								details &raquo;</a>
-						</p>
-					</div>
-					<div class="col-xs-6 col-md-4 placeholder">
-						<a href="#"><span class="glyphicon glyphicon-th"
-							aria-hidden="true"></span></a>
-						<h4>DST db Status</h4>
-						<p>
-							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-						</p>
-						<p>
-							<a class="btn btn-default" href="#" role="button">Check
-								&raquo;</a> <a class="btn btn-default" href="#" role="button">View
-								details &raquo;</a>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				Dpropr
-				<button type="button" class="btn btn-default navbar-btn">Begin
-					Check</button>
-			</div>
-			<div class="panel-body">
-				<div class="row placeholders">
-					<div class="col-xs-6 col-md-4 placeholder">
-						<a href="#"><span class="glyphicon glyphicon-refresh"
-							aria-hidden="true"></span></a>
-						<h4>Production dpropr Status</h4>
-						<p>
-							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-						</p>
-						<p>
-							<a class="btn btn-default" href="#" role="button">Check
-								&raquo;</a> <a class="btn btn-default" href="#" role="button">View
-								details &raquo;</a>
-						</p>
-					</div>
-					<div class="col-xs-6 col-md-4 placeholder">
-						<a href="#"><span class="glyphicon glyphicon-refresh"
-							aria-hidden="true"></span></a>
-						<h4>CDT dpropr Status</h4>
-						<p>
-							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-						</p>
-						<p>
-							<a class="btn btn-default" href="#" role="button">Check
-								&raquo;</a> <a class="btn btn-default" href="#" role="button">View
-								details &raquo;</a>
-						</p>
-					</div>
-					<div class="col-xs-6 col-md-4 placeholder">
-						<a href="#"><span class="glyphicon glyphicon-refresh"
-							aria-hidden="true"></span></a>
-						<h4>DST dpropr Status</h4>
-						<p>
-							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-						</p>
-						<p>
-							<a class="btn btn-default" href="#" role="button">Check
-								&raquo;</a> <a class="btn btn-default" href="#" role="button">View
-								details &raquo;</a>
-						</p>
-					</div>
-				</div>
-			</div>
+		<div class="panel panel-default" style="margin-top: 10px">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Task ID</th>
+						<th>Task Name</th>
+						<th>Create Time</th>
+						<th>Execute Time</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Tanmay</td>
+						<td>Bangalore</td>
+						<td>560001</td>
+						<td>560001</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
+
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="false">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Create Task</h4>
+				</div>
+				<div class="modal-body">aaa</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close
+					</button>
+					<button type="button" class="btn btn-primary">Add</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+	</div>
+	<!-- /.modal -->
 </body>

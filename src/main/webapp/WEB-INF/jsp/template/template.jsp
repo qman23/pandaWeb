@@ -1,6 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="decorator"
 	uri="http://www.opensymphony.com/sitemesh/decorator"%>
+
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -9,8 +10,11 @@
 %>
 <link rel="stylesheet" href="<%=basePath%>style/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=basePath%>style/css/template.css">
+<link rel="stylesheet" href="<%=basePath%>style/css/bootstrap-table.css">
+<link rel="shortcut icon" type="image/x-icon" href="<%=basePath%>style/img/ruyo_net_w_32.png" media="screen" /> 
 <script src="<%=basePath%>style/js/jquery-1.11.2.min.js"></script>
 <script src="<%=basePath%>style/js/bootstrap.min.js"></script>
+<script src="<%=basePath%>style/js/bootstrap-table.js"></script>
 <script>
  var progressUtils={
 		   'getBarDiv':function(){
@@ -146,7 +150,6 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 	padding-bottom: 30px;
 }
 
-/*********************************************?????*********************************************/
 .secondmenu a {
 	font-size: 12px;
 	color: #4A515B;
@@ -230,12 +233,7 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 							<span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Change Password</a></li>
-							<li><a href="#">Another action</a></li>
-							<li><a href="#">Something else here</a></li>
-							<li class="divider"></li>
-							<li><a href="#">Separated link</a></li>
-							<li class="divider"></li>
+							<li><a href="<%=basePath%>changePwd.do">Change Password</a></li>
 							<li><a href="<%=basePath%>logout.do">logout</a></li>
 						</ul></li>
 				</ul>
@@ -264,19 +262,17 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 						data-toggle="collapse"> <i class="glyphicon glyphicon-cog"></i>
 							System Management <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
 					</a>
-						<ul id="systemSetting" class="nav nav-list secondmenu collapse"
-							style="height: 0px;">
-							<li><a href="#"><i class="glyphicon glyphicon-user"></i>&nbsp;User Manage</a></li>
-							<li><a href="#"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Menu Manage</a></li>
+						<ul id="systemSetting" class="nav nav-list secondmenu collapse ${SMcurrentTab}">
+							<li class="${userManageClass}"><a  href="userManage.do"><i class="glyphicon glyphicon-user"></i>&nbsp;User Manage</a></li>
 							<li><a href="#"><i class="glyphicon glyphicon-asterisk"></i>&nbsp;Role Manage</a></li>
-							<li><a href="#"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;View Log</a></li>
+							<li><a href="#"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;Permission Manage</a></li>
 						</ul></li>
 					<li><a href="#configSetting" class="nav-header collapsed"
 						data-toggle="collapse"> <i
-							class="glyphicon glyphicon-credit-card"></i>Project Check  <span
+							class="glyphicon glyphicon-credit-card"></i> Project Check  <span
 							class="pull-right glyphicon  glyphicon-chevron-toggle"></span>
 					</a>
-						<ul id="configSetting" class="nav nav-list secondmenu collapse in">
+						<ul id="configSetting" class="nav nav-list secondmenu collapse ${PCcurrentTab}">
 							<li class="${spvClass }"><a href="spv.do"><i
 									class="glyphicon glyphicon-globe"></i>&nbsp;Spv Check</a></li>
 							<li class="${sprtClass }"><a href="sprt.do"><i
@@ -286,19 +282,21 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 
 					<li><a href="#disSetting" class="nav-header collapsed"
 						data-toggle="collapse"> <i class="glyphicon glyphicon-globe"></i>
-							aaa <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
+							JVM log <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
 					</a>
 						<ul id="disSetting" class="nav nav-list secondmenu collapse">
-							<li><a href="#"><i class="glyphicon glyphicon-th-list"></i>&nbsp;bbb</a></li>
-						</ul></li>
-
+							<li><a href="#"><i class="glyphicon glyphicon-th-list"></i>&nbsp;JVM Check</a></li>
+							<li><a href="#"><i class="glyphicon glyphicon-th-list"></i>&nbsp;View log</a></li>
+						</ul>
+					</li>
 					<li><a href="#dicSetting" class="nav-header collapsed"
 						data-toggle="collapse"> <i class="glyphicon glyphicon-bold"></i>
-							ccc <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
+							Sever health <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
 					</a>
 						<ul id="dicSetting" class="nav nav-list secondmenu collapse">
 							<li><a href="#"><i
-									class="glyphicon glyphicon-text-width"></i>&nbsp;ddd</a></li>
+									class="glyphicon glyphicon-text-width"></i>&nbsp;health check</a></li>
+								<li><a href="#"><i class="glyphicon glyphicon-th-list"></i>&nbsp;View log</a></li>	
 						</ul></li>
 					<li><a href="#"> <i class="glyphicon glyphicon-fire"></i>
 							About Us 
