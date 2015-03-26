@@ -5,6 +5,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="src/main/healthcheck"/>
 	<classpathentry kind="src" path="src/main/web"/>
 	<classpathentry kind="src" path="src/main/bussiness"/>
 	<classpathentry kind="src" path="src/main/db"/>

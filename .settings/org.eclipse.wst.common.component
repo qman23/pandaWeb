@@ -9,6 +9,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/db"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/entity"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/test"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/healthcheck"/>
         <property name="context-root" value="pandaWeb"/>
         <property name="java-output-path" value="/pandaWeb/target/classes"/>
     </wb-module>
