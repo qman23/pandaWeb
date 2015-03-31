@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bussiness.exception.bussnessException;
-import com.entity.User;
+import com.entity.security.User;
 import com.user.dao.UserDao;
 
 @Service("userService")

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bussiness.exception.bussnessException;
-import com.entity.User;
+import com.entity.security.User;
 import com.login.bussiness.UserService;
 
 @Controller

@@ -15,7 +15,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.entity.User;
+import com.entity.security.User;
 import com.login.bussiness.UserService;
 
 public class PandaRealm extends AuthorizingRealm {

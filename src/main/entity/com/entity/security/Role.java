@@ -1,4 +1,4 @@
-package com.entity;
+package com.entity.security;
 
 import java.util.List;
 

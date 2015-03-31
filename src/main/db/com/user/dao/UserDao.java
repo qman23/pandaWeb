@@ -2,7 +2,7 @@ package com.user.dao;
 
 import java.util.List;
 
-import com.entity.User;
+import com.entity.security.User;
 
 public interface UserDao {
     public User findByEmail(String email);  
