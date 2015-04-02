@@ -51,6 +51,12 @@ public class ConfigProperty {
      * 
      */
     public static String getPropertyByKey(String key) {
+    	try {
+			loadProperty();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return prop.getProperty(key);
     }
     
@@ -107,7 +113,7 @@ public class ConfigProperty {
      * 
      */
     private static FileInputStream getPropAsStream() throws FileNotFoundException{
-        return new FileInputStream(new File(PROP_PATH));
+        return new FileInputStream(new File(ConfigProperty.class.getResource("/").getPath()+PROP_PATH));
     }
     
     /**
@@ -125,4 +131,8 @@ public class ConfigProperty {
         }
         return null;
     }
+    
+    public static void main(String[] args) {
+		System.out.println(ConfigProperty.class.getResource("/").getPath());
+	}
 }

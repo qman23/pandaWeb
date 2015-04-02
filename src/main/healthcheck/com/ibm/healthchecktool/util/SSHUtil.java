@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
+import com.ibm.healthchecktool.bean.ConnBean;
 import com.ibm.healthchecktool.config.ConfigProperty;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
@@ -50,6 +51,9 @@ public class SSHUtil {
 		session.connect();
 	}
 
+	public void connect(ConnBean connBean) throws NumberFormatException, Exception{
+		connect(connBean.getHost(), Integer.parseInt(connBean.getPort()), connBean.getName(), connBean.getPwd());
+	}
 	private void connectExec(String type) throws Exception {
 		if (session == null) {
 			throw new RuntimeException("Not connected");
