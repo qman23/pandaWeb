@@ -31,6 +31,5 @@ public class ValidateTask extends Task{
 		data.put("regularEp", regularEp);
 		data.put("catalogId", catalogId);
 		data.put("groupId", groupId);
-		
 	}
 }

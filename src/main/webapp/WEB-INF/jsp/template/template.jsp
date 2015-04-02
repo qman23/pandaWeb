@@ -8,6 +8,9 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
+<html>
+<head>
+<title>Welcome to Panda</title>
 <link rel="stylesheet" href="<%=basePath%>style/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=basePath%>style/css/template.css">
 <link rel="stylesheet" href="<%=basePath%>style/css/bootstrap-table.css">
@@ -199,7 +202,9 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 	content: "\e114";
 }
 </style>
-<html>
+<decorator:head/>
+</head>
+
 <body>
 	<input type="hidden" id="progress_1" value="25%">
 
@@ -282,11 +287,11 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 
 					<li><a href="#disSetting" class="nav-header collapsed"
 						data-toggle="collapse"> <i class="glyphicon glyphicon-globe"></i>
-							JVM log <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
-					</a>
-						<ul id="disSetting" class="nav nav-list secondmenu collapse">
-							<li><a href="#"><i class="glyphicon glyphicon-th-list"></i>&nbsp;JVM Check</a></li>
-							<li><a href="#"><i class="glyphicon glyphicon-th-list"></i>&nbsp;View log</a></li>
+							Task <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
+					</a> 
+						<ul id="disSetting" class="nav nav-list secondmenu collapse ${TKcurrentTab}">
+							<li class="${taskGroupClass}"><a href="taskManage.do" ><i class="glyphicon glyphicon-th-list"></i>&nbsp;Task Group Manage</a></li>
+							<li><a href="#"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Task Manage</a></li>
 						</ul>
 					</li>
 					<li><a href="#dicSetting" class="nav-header collapsed"
