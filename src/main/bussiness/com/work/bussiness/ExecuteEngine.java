@@ -9,7 +9,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import com.entity.work.ScriptTask;
 import com.entity.work.Task;
@@ -27,7 +26,8 @@ public class ExecuteEngine implements Callable<Map>{
 		 ExecutorService exec = Executors.newFixedThreadPool(10);
 	        CompletionService<Map> serv =  
 	        new ExecutorCompletionService<Map>(exec);
-	            ExecuteFactory factory=  new ExecuteFactory();
+	            ExecuteFactory factory1=  new ExecuteFactory();
+	            ExecuteFactory factory2=  new ExecuteFactory();
 	            ScriptTask t1=new ScriptTask();
 	            ScriptTask t2=new ScriptTask();
 	            ScriptTask t3=new ScriptTask();
@@ -43,8 +43,8 @@ public class ExecuteEngine implements Callable<Map>{
 	            List<Task> t1List=new ArrayList<Task>();
 	            List<Task> t2List=new ArrayList<Task>();
 	            t1List.add(t1);t1List.add(t2);t2List.add(t3);t2List.add(t4);
-	            ExecuteEngine execute1=new ExecuteEngine(t1List,factory);
-	            ExecuteEngine execute2=new ExecuteEngine(t2List,factory);
+	            ExecuteEngine execute1=new ExecuteEngine(t1List,factory1);
+	            ExecuteEngine execute2=new ExecuteEngine(t2List,factory2);
 	            serv.submit(execute1);  
 	            serv.submit(execute2);
 	            exec.shutdown();  

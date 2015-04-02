@@ -6,7 +6,9 @@ public class AcessWebTask extends Task {
 
 	private String Url;
 	private String UserName;
+	private String Password;
 
+	
 	public String getUrl() {
 		return Url;
 	}
@@ -31,7 +33,6 @@ public class AcessWebTask extends Task {
 		Password = password;
 	}
 
-	private String Password;
 
 	@Override
 	protected void setData() {

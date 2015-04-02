@@ -52,6 +52,7 @@ public class PandaRealm extends AuthorizingRealm {
 			AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(
 					user.getEmail(), user.getPassword(), this.getName());
 			setSession("CurrentUser", user.getEmail());
+			setSession("CurrentUserId", user.getUserid());
 			return authcInfo;
 		}
 		return null;

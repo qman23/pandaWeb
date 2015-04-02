@@ -1,22 +1,42 @@
 package com.entity.work;
 
+import java.sql.Timestamp;
+
 public class TaskLog {
-	private int TaskId;
-	private String Log;
+	private int userId;
+	private int taskId;
+	private String taskLog;
+	private Timestamp executeDate;
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 
 	public int getTaskId() {
-		return TaskId;
+		return taskId;
 	}
 
 	public void setTaskId(int taskId) {
-		TaskId = taskId;
+		this.taskId = taskId;
 	}
 
-	public String getLog() {
-		return Log;
+	public String getTaskLog() {
+		return taskLog;
 	}
 
-	public void setLog(String log) {
-		Log = log;
+	public void setTaskLog(String taskLog) {
+		this.taskLog = taskLog;
+	}
+
+	public Timestamp getExecuteDate() {
+		return executeDate;
+	}
+
+	public void setExecuteDate(Timestamp executeDate) {
+		this.executeDate = executeDate;
 	}
 }

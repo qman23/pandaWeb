@@ -1,15 +1,15 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<html>
-<head>
-<title>Welcome to Panda</title>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
+<html>
+<head>
+<title>Welcome to Panda</title>
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="<%=basePath%>style/css/bootstrap.min.css">
 <script src="<%=basePath%>style/js/jquery-1.11.2.min.js"></script>

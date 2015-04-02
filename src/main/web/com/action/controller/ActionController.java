@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 
  * @author Allen
  */
-abstract class ActionController {
+public abstract class ActionController {
 
 	protected Logger logger = Logger.getLogger(getClass().getName());
 
