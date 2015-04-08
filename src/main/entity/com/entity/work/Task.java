@@ -3,13 +3,20 @@ package com.entity.work;
 import java.sql.Timestamp;
 import java.util.Map;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.utils.business.PandaConstants;
+
 public abstract class Task {
 
 	private Task nextTask;
 	protected int taskId;
 	protected String taskName;
+	@JSONField (format="yyyy-MM-dd HH:mm:ss")
 	protected Timestamp createDate;
+	@JSONField (format="yyyy-MM-dd HH:mm:ss")
+	protected Timestamp lastModify;
 	protected int catalogId;
+	protected String catalogName;
 	protected int groupId;
 	protected String comments;
 	protected String executeParam;
@@ -89,4 +96,24 @@ public abstract class Task {
 		this.nextTask = nextTask;
 	}
 
+	public Timestamp getLastModify() {
+		return lastModify;
+	}
+
+	public void setLastModify(Timestamp lastModify) {
+		this.lastModify = lastModify;
+	}
+
+	public String getCatalogName() {
+		switch(catalogId){
+		case PandaConstants.SCRIPT_CATALOG_ID:return PandaConstants.SCRIPT_CATALOG_NAME;
+		case PandaConstants.ACCESSWEB_CATALOG_ID:return PandaConstants.ACCESSWEB_CATALOG_NAME;
+		case PandaConstants.VALIDATE_CATALOG_ID:return PandaConstants.VALIDATE_CATALOG_NAME;
+		default:return "";
+		}
+	}
+
+	public void setCatalogName(String catalogName) {
+		this.catalogName = catalogName;
+	}
 }

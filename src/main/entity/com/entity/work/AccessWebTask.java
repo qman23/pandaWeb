@@ -2,7 +2,7 @@ package com.entity.work;
 
 import java.util.HashMap;
 
-public class AcessWebTask extends Task {
+public class AccessWebTask extends Task {
 
 	private String Url;
 	private String UserName;

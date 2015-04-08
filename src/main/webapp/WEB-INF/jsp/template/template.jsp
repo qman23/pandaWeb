@@ -244,7 +244,7 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 				</ul>
 			</div>
 		</div>
-		<div style="height: 3px; display: none" id="progress_div">
+		<div style="height: 5px; display: none" id="progress_div">
 			<div class="progress-bar progress-bar-success progress-bar-striped"
 				id="progress" role="progressbar" aria-valuenow="40"
 				aria-valuemin="0" aria-valuemax="100"></div>
@@ -290,8 +290,8 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 							Task <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
 					</a> 
 						<ul id="disSetting" class="nav nav-list secondmenu collapse ${TKcurrentTab}">
-							<li class="${taskGroupClass}"><a href="taskManage.do" ><i class="glyphicon glyphicon-th-list"></i>&nbsp;Task Group Manage</a></li>
-							<li><a href="#"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Task Manage</a></li>
+							<li class="${taskGroupClass}"><a href="taskGroupManage.do" ><i class="glyphicon glyphicon-th-list"></i>&nbsp;Task Group Manage</a></li>
+							<li class="${taskClass}"><a href="taskManage.do"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Task Manage</a></li>
 						</ul>
 					</li>
 					<li><a href="#dicSetting" class="nav-header collapsed"

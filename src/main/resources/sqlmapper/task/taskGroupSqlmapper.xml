@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Task">
+	<resultMap id="TaskGroup" type="com.entity.work.TaskGroup">
+		<id column="GROUP_ID" property="groupId"  />
+		<result column="GROUP_NAME" property="groupName"/>
+		<result column="GROUP_DESCRIPTION" property="description"/>
+		<result column="CREATE_DATE" property="createDate" />
+	</resultMap>
+	
+	<sql id='TASK_GROUP'>TASK_GROUP</sql>
+	<sql id='USER_TASK_GROUP'>USER_TASK_GROUP</sql>
+	<sql id='defaultSchema'>PANDA</sql>
+	
+	<!-- task group sql -->
+	<select id="findTaskGroupByGroupId" parameterType="int" resultMap="TaskGroup">
+		SELECT * FROM <include refid="defaultSchema" />.<include refid="TASK_GROUP" /> WHERE GROUP_ID=#{groupId}
+	</select>
+	<insert id="insertTaskGroup" parameterType="com.entity.work.TaskGroup" useGeneratedKeys="true" keyProperty="groupId" keyColumn="GROUP_ID" >
+		INSERT INTO <include refid="defaultSchema" />.<include refid="TASK_GROUP" /> (GROUP_NAME,GROUP_DESCRIPTION,CREATE_DATE) VALUES (#{groupName},#{description},#{createDate})
+	</insert>
+	<update id="updateTaskGroup" parameterType="com.entity.work.TaskGroup">
+		UPDATE <include refid="defaultSchema" />.<include refid="TASK_GROUP" /> SET GROUP_NAME=#{groupName},GROUP_DESCRIPTION=#{description},CREATE_DATE=#{createDate} WHERE GROUP_ID=#{groupId}
+	</update>
+	<delete id="deleteTaskGroup" parameterType="com.entity.work.TaskGroup">
+		DELETE FROM <include refid="defaultSchema" />.<include refid="TASK_GROUP" /> WHERE GROUP_ID=#{groupId}
+	</delete>
+	<!-- task user group sql -->
+	<insert id="insertTaskUserGroup" parameterType="Map">
+		INSERT INTO <include refid="defaultSchema" />.<include refid="USER_TASK_GROUP" /> (USER_ID,GROUP_ID) VALUES (#{userId},#{groupId})
+	</insert>
+	<select id="findTaskGroupByUserId" parameterType="int" resultMap="TaskGroup"> 
+		SELECT TG.* FROM <include refid="defaultSchema" />.<include refid="TASK_GROUP" /> TG,
+		<include refid="defaultSchema" />.<include refid="USER_TASK_GROUP" /> UTG WHERE UTG.GROUP_ID=TG.GROUP_ID AND UTG.USER_ID=#{userId}
+	</select>
+	<delete id="deleteTaskUserGroup" parameterType="Map">
+		DELETE FROM <include refid="defaultSchema" />.<include refid="USER_TASK_GROUP" /> WHERE USER_ID=#{userId} AND GROUP_ID=#{groupId}
+	</delete>
+</mapper>

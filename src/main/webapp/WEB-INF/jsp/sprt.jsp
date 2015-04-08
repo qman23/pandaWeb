@@ -32,7 +32,7 @@
 									data:"userid=123&email=lee@cn.ibm.com",
 									dataType:"json",
 									success: function(msg){
-										$("#dropdown-menu").empty();
+										$(".dropdown-menu").html('');
 										$.each(msg,function(){
 											var str = '<li role="presentation"><a role="menuitem" tabindex="-1" href="#">'+this+'</a></li>';
 											$("ul.dropdown-menu").append(str);
