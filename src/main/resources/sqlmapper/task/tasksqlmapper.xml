@@ -8,10 +8,14 @@
 		<result column="CREATE_DATE" property="createDate" />
 		<result column="LAST_MODIFY" property="lastModify" />
 		<result column="COMMENTS" property="comments" />
+		<result column="TASK_PARAMETER" property="taskParameter" />
+		<result column="RELATIVE_TASK_ID" property="relativeId" />
+		<result column="TASK_INDEX" property="index" />
 	</resultMap>
 
 	<sql id='TASK'>TASK</sql>
 	<sql id='GROUP_TASK'>GROUP_TASK</sql>
+	<sql id='TASK_PARAMETER'>TASK_PARAMETER</sql>
 	<!-- task sql -->
 	<select id="findTasksByGroupId" parameterType="int" resultMap="Task">
 		SELECT T.* FROM
@@ -24,4 +28,18 @@
 		<include refid="TASK" />
 		T WHERE GT.TASK_ID=T.TASK_ID AND GT.GROUP_ID=#{groupId}
 	</select>
+	<select id="findTaskByTaskId" parameterType="int" resultMap="Task">
+		SELECT T.*,TP.TASK_PARAMETER,GT.RELATIVE_TASK_ID,GT.TASK_INDEX FROM <include refid="defaultSchema" />.<include refid="TASK" /> T,
+		<include refid="defaultSchema" />.<include refid="TASK_PARAMETER" /> TP,
+		<include refid="defaultSchema" />.<include refid="GROUP_TASK" /> GT WHERE GT.TASK_ID=T.TASK_ID AND TP.TASK_ID=T.TASK_ID AND T.TASK_ID=#{taskId} 
+	</select>
+	<insert id="insertGroupTask" parameterType="com.entity.work.Task">
+		insert into <include refid="defaultSchema" />.<include refid="GROUP_TASK" /> (GROUP_ID,TASK_ID,RELATIVE_TASK_ID,TASK_INDEX) VALUES (#{groupId},#{taskId},#{relativeId},#{index})
+	</insert>
+	<insert id="insertTask" parameterType="com.entity.work.Task" useGeneratedKeys="true" keyProperty="taskId" keyColumn="TASK_ID">
+		insert into <include refid="defaultSchema" />.<include refid="TASK" /> (TASK_NAME,CATALOG_ID,CREATE_DATE,LAST_MODIFY,COMMENTS) VALUES (#{taskName},#{catalogId},#{createDate},CURRENT TIMESTAMP,#{comments})
+	</insert>
+	<insert id="insertTaskParameter" parameterType="com.entity.work.Task">
+		insert into <include refid="defaultSchema" />.<include refid="TASK_PARAMETER" /> (TASK_ID,TASK_PARAMETER) VALUES(#{taskId},xmlparse(document #{taskParameter} preserve whitespace))
+	</insert>
 </mapper>

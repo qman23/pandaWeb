@@ -11,7 +11,14 @@
 <script>
 	window.operateEvents = {
 		'click .like' : function(e, value, row, index) {
-			alert('You click like action, row: ' + JSON.stringify(row));
+			$.ajax({
+				   type: "get",
+				   url: "<%=basePath%>/getTask.do",
+				   data: "taskId="+row.taskId,
+				   success: function(msg){
+				     alert( "Data get: " + msg );
+				   }
+				});
 		},
 		'click .remove' : function(e, value, row, index) {
 			$table.bootstrapTable('remove', {
@@ -21,6 +28,7 @@
 		}
 	};
 	function operateFormatter(value, row, index) {
+		
 		return [ '<a class="like" href="javascript:void(0)" title="Modify">',
 				'<i class="glyphicon glyphicon-wrench"></i>', '</a>  ',
 				'<a class="remove" href="javascript:void(0)" title="Remove">',
@@ -38,7 +46,7 @@
 						};
 					},
 					cache : false,
-					height : 400,
+					height : 580,
 					striped : true,
 					pagination : true,
 					pageSize : 50,
@@ -99,9 +107,7 @@
 					} ]
 				});
 	}
-	$(document)
-			.ready(
-					function() {
+	$(document).ready(function() {
 						getTasks();
 						$("#taskGroupNameSelect").change(
 								function() {
@@ -113,13 +119,16 @@
 															'option:selected')
 															.attr("id")
 												}
-											})
+											});
 								});
-						$("input[name=inlineRadioOptions]").each(
-										function(i) {$(this).click(function() {
+						$("input[name=taskCatalogId]").each(function(i) {$(this).click(function() {
 																$("#parameterDiv").html("");
 																$("#parameterDiv").html($("#"+$(this).attr("class")+ "").html())});
 						});
+						
+						$('#newTaskBtn').click(function(){
+							$('#taskGroupid').val($('#taskGroupNameSelect').children('option:selected').attr("id"));
+						})
 					});
 </script>
 </head>
@@ -136,7 +145,7 @@
 								<option class="groupNameOption" id="${taskGroup.groupId}">${taskGroup.groupName}</option>
 							</c:forEach>
 						</select> <label for="TaskGroupName" class="control-label"><small>New
-								Task</small></label> <input class=" btn btn-default" type="button" value="New"
+								Task</small></label> <input class=" btn btn-default" type="button" value="New" id="newTaskBtn"
 							data-toggle="modal" data-target="#addNewTask">
 					</div>
 				</div>
@@ -166,13 +175,14 @@
 					<h4 class="modal-title" id="myModalLabel">Task initialize Details</h4>
 				</div>
 				<div class="modal-body" style="height: 650px">
-					<form role="form" action="<%=basePath%>home/taskGroupManage.do"
+					<form role="form" action="saveTasks.do"
 						method="Post">
+						<input type="hidden" id="taskGroupid" name="taskGroupId"></input>
 						<div class="form-group">
 							<label for="TaskGroupName" class="col-sm-3 control-label"><small>TasK
 									Name</small></label>
 							<div class="col-sm-12">
-								<input type="text" class="form-control" name="groupName"
+								<input type="text" class="form-control" name="taskName"
 									placeholder="Task Name" required>
 							</div>
 						</div>
@@ -189,14 +199,14 @@
 									Task Id</small></label>
 							<div class="col-sm-12" >
 								<input type="text" class="form-control" name="relativeTaskId"
-									placeholder="Relative Task Id" required>
+									placeholder="Relative Task Id" >
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="TaskGroupDesc" class="col-sm-4 control-label"><small>
 									Task Index</small></label>
 							<div class="col-sm-12">
-								<input type="text" class="form-control" name="relativeTaskId"
+								<input type="text" class="form-control" name="taskIndex"
 									placeholder="Task Index" required>
 							</div>
 						</div>
@@ -205,16 +215,16 @@
 									Catalog</small></label>
 							<div class="col-sm-12">
 								<label class="radio-inline"> <input type="radio"
-									name="inlineRadioOptions" id="accessWebRadio"
-									class="accessWebParameter" value="option1" checked>
+									name="taskCatalogId" id="accessWebRadio"
+									class="accessWebParameter" value="2" checked>
 									Access Web Task
 								</label> <label class="radio-inline"> <input type="radio"
-									name="inlineRadioOptions" id="scriptTaskRadio"
-									class="scriptTaskParameter" value="option2"> Script
+									name="taskCatalogId" id="scriptTaskRadio"
+									class="scriptTaskParameter" value="1"> Script
 									Task
 								</label> <label class="radio-inline"> <input type="radio"
-									name="inlineRadioOptions" id="validateRadio"
-									class="validateTaskParameter" value="option3"> Validate
+									name="taskCatalogId" id="validateRadio"
+									class="validateTaskParameter" value="3"> Validate
 									Task
 								</label>
 							</div>
@@ -248,7 +258,7 @@
 		</div>
 	</div>
 
-	<!-- task parameter cut -->
+	<!-- Access Web Task parameter cut -->
 	<div style="display: none" id="accessWebParameter">
 		<label for="TaskGroupName" class="col-sm-3 control-label"><small>Server
 				Url</small></label> <input type="text" class="form-control" name="serverUrl"
@@ -260,20 +270,22 @@
 			type="password" class="form-control" name="userPassword"
 			placeholder="User Password" required>
 	</div>
+	<!-- Script Task  parameter cut -->
 	<div style="display: none" id="scriptTaskParameter">
 		<label for="TaskGroupName" class="col-sm-3 control-label"><small>Script
-		</small></label> <input type="text" class="form-control" name="serverUrl"
+		</small></label> <input type="text" class="form-control" name="script"
 			placeholder="Script need to execute" required> <label
 			for="TaskGroupName" class="col-sm-3 control-label"><small>Expect
-				Result </small></label> <input type="text" class="form-control" name="userName"
+				Result </small></label> <input type="text" class="form-control" name="expectResult"
 			placeholder="Expect Result" required>
 	</div>
+	<!-- Validate Task parameter cut -->
 	<div style="display: none" id="validateTaskParameter">
 		<label for="TaskGroupName" class="col-sm-4 control-label"><small>Validate
-				Expression </small></label> <input type="text" class="form-control" name="serverUrl"
+				Expression </small></label> <input type="text" class="form-control" name="validateExpression"
 			placeholder="Validate Expression" required> <label
 			for="TaskGroupName" class="col-sm-3 control-label"><small>Expect
-				Result </small></label> <input type="text" class="form-control" name="userName"
+				Result </small></label> <input type="text" class="form-control" name="expectResult"
 			placeholder="Expect Result" required>
 	</div>
 </body>

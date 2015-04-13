@@ -10,25 +10,20 @@ public abstract class Task {
 
 	private Task nextTask;
 	protected int taskId;
-	protected String taskName;
-	@JSONField (format="yyyy-MM-dd HH:mm:ss")
-	protected Timestamp createDate;
-	@JSONField (format="yyyy-MM-dd HH:mm:ss")
-	protected Timestamp lastModify;
 	protected int catalogId;
-	protected String catalogName;
 	protected int groupId;
+	protected int relativeId;
+	protected int index;
 	protected String comments;
-	protected String executeParam;
-
-	public String getExecuteParam() {
-		return executeParam;
-	}
-
-	public void setExecuteParam(String executeParam) {
-		this.executeParam = executeParam;
-	}
-
+	protected String catalogName;
+	protected String taskName;
+	protected String taskParameter;
+	
+	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
+	protected Timestamp createDate;
+	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
+	protected Timestamp lastModify;
+	
 	public String getTaskName() {
 		return taskName;
 	}
@@ -105,15 +100,56 @@ public abstract class Task {
 	}
 
 	public String getCatalogName() {
-		switch(catalogId){
-		case PandaConstants.SCRIPT_CATALOG_ID:return PandaConstants.SCRIPT_CATALOG_NAME;
-		case PandaConstants.ACCESSWEB_CATALOG_ID:return PandaConstants.ACCESSWEB_CATALOG_NAME;
-		case PandaConstants.VALIDATE_CATALOG_ID:return PandaConstants.VALIDATE_CATALOG_NAME;
-		default:return "";
+		switch (catalogId) {
+		case PandaConstants.SCRIPT_CATALOG_ID:
+			return PandaConstants.SCRIPT_CATALOG_NAME;
+		case PandaConstants.ACCESSWEB_CATALOG_ID:
+			return PandaConstants.ACCESSWEB_CATALOG_NAME;
+		case PandaConstants.VALIDATE_CATALOG_ID:
+			return PandaConstants.VALIDATE_CATALOG_NAME;
+		default:
+			return "";
+		}
+	}
+
+	public static Task getTask(int catalogId) {
+		switch (catalogId) {
+		case PandaConstants.SCRIPT_CATALOG_ID:
+			return new ScriptTask();
+		case PandaConstants.ACCESSWEB_CATALOG_ID:
+			return new AccessWebTask();
+		case PandaConstants.VALIDATE_CATALOG_ID:
+			return new ValidateTask();
+		default:
+			return null;
 		}
 	}
 
 	public void setCatalogName(String catalogName) {
 		this.catalogName = catalogName;
+	}
+
+	public int getRelativeId() {
+		return relativeId;
+	}
+
+	public void setRelativeId(int relativeId) {
+		this.relativeId = relativeId;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
+	public String getTaskParameter() {
+		return taskParameter;
+	}
+
+	public void setTaskParameter(String taskParameter) {
+		this.taskParameter = taskParameter;
 	}
 }

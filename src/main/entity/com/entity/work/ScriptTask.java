@@ -20,13 +20,20 @@ public class ScriptTask extends Task {
 		this.script = script;
 	}
 
+	private String expectResult;
+	
+	public String getExpectResult() {
+		return expectResult;
+	}
+
+	public void setExpectResult(String expectResult) {
+		this.expectResult = expectResult;
+	}
 
 	@Override
 	protected void setData() {
 		data=new HashMap<String,Object>();
-		data.put("taskId", taskId);
 		data.put("script", script);
-		data.put("catalogId", catalogId);
-		data.put("groupId", groupId);
+		data.put("expectResult", expectResult);
 	}
 }

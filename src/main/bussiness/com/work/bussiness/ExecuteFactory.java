@@ -1,13 +1,13 @@
 package com.work.bussiness;
 
-import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 import com.entity.work.Task;
 
 public class ExecuteFactory {
 	
-	private Map context=new HashMap<String,String>();
+	private Hashtable context=new Hashtable<String,String>();
 	private final static String EXECUTER="Executer";
 	private final static String PACKAGENAME="com.work.bussiness.";
 	
