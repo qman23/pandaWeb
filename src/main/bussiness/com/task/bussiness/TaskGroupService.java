@@ -6,14 +6,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.entity.work.Task;
 import com.entity.work.TaskGroup;
-import com.user.dao.TaskGroupDao;
+import com.task.dao.TaskGroupDao;
 
 @Service("taskGroupService")
 public class TaskGroupService {
 
 	@Autowired
 	private TaskGroupDao taskGroupDao;
+	@Autowired
+	private TaskService taskService;
 
 	public TaskGroup findTaskGroupByGroupId(int groupId) {
 		return taskGroupDao.findTaskGroupByGroupId(groupId);
@@ -28,6 +31,10 @@ public class TaskGroupService {
 	}
 
 	public void deleteTaskGroup(int userId,TaskGroup taskGroup) {
+		List<Task> taskList=taskService.findTasksByGroupId(taskGroup.getGroupId());
+		for(int i=0;i<taskList.size();i++){
+			taskService.deleteTask(taskList.get(i));
+		}
 		deleteTaskUserGroup(userId,taskGroup.getGroupId());
 		taskGroupDao.deleteTaskGroup(taskGroup);
 	}

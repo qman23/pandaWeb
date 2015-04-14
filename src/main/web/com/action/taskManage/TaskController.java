@@ -16,6 +16,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.entity.work.AccessWebTask;
 import com.entity.work.ScriptTask;
 import com.entity.work.Task;
+import com.entity.work.TaskTemplate;
 import com.entity.work.ValidateTask;
 import com.task.bussiness.TaskGroupService;
 import com.task.bussiness.TaskService;
@@ -49,10 +50,10 @@ public class TaskController extends ActionController {
 		writer.close();
 	}
 
-	@RequestMapping(value = "/home/saveTasks.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/home/saveTask.do", method = RequestMethod.POST)
 	public ModelAndView saveTask(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("redirect:/home/taskManage.do");
-		Task t=getSaveTask(request);
+		Task t=getTaskFromRequest(request);
 		taskService.saveTask(t);
 		return mv;
 	}
@@ -60,12 +61,28 @@ public class TaskController extends ActionController {
 	@RequestMapping(value = "getTask.do", method = RequestMethod.GET)
 	public ModelAndView getTask(int taskId, PrintWriter writer) {
 		ModelAndView mv = new ModelAndView("task/taskModify");
-		mv.addObject(taskService.findTaskById(taskId));
+		mv.addObject("task",taskService.findTaskById(taskId));
 		return mv;
 	}
 	
+	@RequestMapping(value = "/home/updateTask.do", method = RequestMethod.POST)
+	public ModelAndView updateTask(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("redirect:/home/taskManage.do");
+		Task t=getTaskFromRequest(request);
+		taskService.updateTask(t);
+		return mv;
+	}
+	
+	@RequestMapping(value = "/deleteTask.do", method = RequestMethod.POST)
+	public ModelAndView deleteTask(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("redirect:/home/taskManage.do");
+		TaskTemplate t=new TaskTemplate();
+		t.setTaskId(Utils.isStringNull(request.getParameter("taskId"))?0:Integer.parseInt(request.getParameter("taskId")));
+		taskService.deleteTask(t);
+		return mv;
+	}
 
-	private Task getSaveTask(HttpServletRequest request) {
+	private Task getTaskFromRequest(HttpServletRequest request) {
 		int catalogId=Integer.parseInt(request
 				.getParameter("taskCatalogId"));
 		Task t = Task.getTask(catalogId);
@@ -96,10 +113,10 @@ public class TaskController extends ActionController {
 		t.setCatalogId(catalogId);
 		t.setTaskName(request.getParameter("taskName"));
 		t.setComments(request.getParameter("comments"));
-		t.setGroupId(Integer.parseInt(request.getParameter("taskGroupId")));
+		t.setTaskId(Utils.isStringNull(request.getParameter("taskId"))?0:Integer.parseInt(request.getParameter("taskId")));
+		t.setGroupId(Utils.isStringNull(request.getParameter("taskGroupId"))?0:Integer.parseInt(request.getParameter("taskGroupId")));
 		t.setRelativeId(Utils.isStringNull(request.getParameter("relativeTaskId"))?0:Integer.parseInt(request.getParameter("relativeTaskId")));
-		t.setIndex(Integer.parseInt(request.getParameter("taskIndex")));
-		t.setCatalogId(Integer.parseInt(request.getParameter("taskCatalogId")));
+		t.setIndex(Utils.isStringNull(request.getParameter("taskIndex"))?0:Integer.parseInt(request.getParameter("taskIndex")));
 		t.setCreateDate(Utils.getCurrentTimes());
 		return t;
 	}

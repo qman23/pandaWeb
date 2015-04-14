@@ -18,7 +18,7 @@
 	<sql id='TASK_PARAMETER'>TASK_PARAMETER</sql>
 	<!-- task sql -->
 	<select id="findTasksByGroupId" parameterType="int" resultMap="Task">
-		SELECT T.* FROM
+		SELECT T.*,TP.TASK_PARAMETER,GT.RELATIVE_TASK_ID,GT.TASK_INDEX FROM
 		<include refid="defaultSchema" />
 		.
 		<include refid="GROUP_TASK" />
@@ -26,7 +26,9 @@
 		<include refid="defaultSchema" />
 		.
 		<include refid="TASK" />
-		T WHERE GT.TASK_ID=T.TASK_ID AND GT.GROUP_ID=#{groupId}
+		T,<include refid="defaultSchema" />
+		.
+		<include refid="TASK_PARAMETER" /> TP WHERE GT.TASK_ID=T.TASK_ID AND T.TASK_ID=TP.TASK_ID AND GT.GROUP_ID=#{groupId} order by GT.TASK_INDEX
 	</select>
 	<select id="findTaskByTaskId" parameterType="int" resultMap="Task">
 		SELECT T.*,TP.TASK_PARAMETER,GT.RELATIVE_TASK_ID,GT.TASK_INDEX FROM <include refid="defaultSchema" />.<include refid="TASK" /> T,
@@ -42,4 +44,23 @@
 	<insert id="insertTaskParameter" parameterType="com.entity.work.Task">
 		insert into <include refid="defaultSchema" />.<include refid="TASK_PARAMETER" /> (TASK_ID,TASK_PARAMETER) VALUES(#{taskId},xmlparse(document #{taskParameter} preserve whitespace))
 	</insert>
+	
+	<update id="updateGroupTask" parameterType="com.entity.work.Task">
+		update <include refid="defaultSchema" />.<include refid="GROUP_TASK" /> set RELATIVE_TASK_ID=#{relativeId},TASK_INDEX=#{index} where TASK_ID=#{taskId}
+	</update>
+	
+	<update id="updateTask" parameterType="com.entity.work.Task">
+		update <include refid="defaultSchema" />.<include refid="TASK" /> set TASK_NAME=#{taskName},CATALOG_ID=#{catalogId},COMMENTS=#{comments},LAST_MODIFY=CURRENT TIMESTAMP where TASK_ID=#{taskId}
+	</update>
+	
+	<update id="updateTaskParameter" parameterType="com.entity.work.Task">
+		update <include refid="defaultSchema" />.<include refid="TASK_PARAMETER" /> set TASK_PARAMETER=xmlparse(document #{taskParameter} preserve whitespace) where TASK_ID=#{taskId}
+	</update>
+	
+	<delete id="deleteGroupTask" parameterType="com.entity.work.Task">delete from <include refid="defaultSchema" />.<include refid="GROUP_TASK" /> where TASK_ID=#{taskId}</delete>
+	
+	<delete id="deleteTask" parameterType="com.entity.work.Task">delete from <include refid="defaultSchema" />.<include refid="TASK" /> where TASK_ID=#{taskId}</delete>
+	
+	<delete id="deleteTaskParameter" parameterType="com.entity.work.Task">delete from <include refid="defaultSchema" />.<include refid="TASK_PARAMETER" /> where TASK_ID=#{taskId}</delete>
+
 </mapper>

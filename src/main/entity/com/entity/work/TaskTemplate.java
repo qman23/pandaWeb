@@ -7,4 +7,5 @@ public class TaskTemplate extends Task{
 	protected void setData() {
 		
 	}
+	
 }

@@ -16,22 +16,20 @@
 				   url: "<%=basePath%>/getTask.do",
 				   data: "taskId="+row.taskId,
 				   success: function(msg){
-				     alert( "Data get: " + msg );
+				     $('#modifyTask').find('.modal-body').html(msg);
 				   }
 				});
 		},
 		'click .remove' : function(e, value, row, index) {
-			$table.bootstrapTable('remove', {
-				field : 'taskId',
-				values : [ row.id ]
-			});
+				$('#deleteTaskId').val(row.taskId);
+				$('#deleteModel').show();
 		}
 	};
 	function operateFormatter(value, row, index) {
 		
-		return [ '<a class="like" href="javascript:void(0)" title="Modify">',
+		return [ '<a class="like" href="#" title="Modify" data-toggle="modal" data-target="#modifyTask">',
 				'<i class="glyphicon glyphicon-wrench"></i>', '</a>  ',
-				'<a class="remove" href="javascript:void(0)" title="Remove">',
+				'<a class="remove" href="#" title="Remove" data-toggle="modal" data-target="#deleteModel">',
 				'<i class="glyphicon glyphicon-remove"></i>', '</a>' ].join('');
 	}
 	function getTasks() {
@@ -96,7 +94,22 @@
 						align : 'center',
 						valign : 'top',
 						sortable : true
-					}, {
+					},
+					{
+						field : 'relativeId',
+						title : 'relativeId',
+						align : 'center',
+						valign : 'top',
+						sortable : true
+					},
+					{
+						field : 'index',
+						title : 'index',
+						align : 'center',
+						valign : 'top',
+						sortable : true
+					},
+					 {
 						field : 'operate',
 						title : 'operate',
 						align : 'center',
@@ -128,6 +141,26 @@
 						
 						$('#newTaskBtn').click(function(){
 							$('#taskGroupid').val($('#taskGroupNameSelect').children('option:selected').attr("id"));
+						})
+						
+						$('#deleteTaskBtn').click(function(){
+							$.ajax({
+								   type: "post",
+								   url: "<%=basePath%>/deleteTask.do",
+								   data: "taskId="+$('#deleteTaskId').val(),
+								   success: function(msg){
+								     $('#table-javascript').bootstrapTable(
+															'refresh',
+															{
+																query : {
+																	groupId : $('#taskGroupNameSelect').children(
+																			'option:selected')
+																			.attr("id")
+																}
+															});
+									 $('#deleteModel').hide();
+								   }
+								});
 						})
 					});
 </script>
@@ -175,7 +208,7 @@
 					<h4 class="modal-title" id="myModalLabel">Task initialize Details</h4>
 				</div>
 				<div class="modal-body" style="height: 650px">
-					<form role="form" action="saveTasks.do"
+					<form role="form" action="saveTask.do"
 						method="Post">
 						<input type="hidden" id="taskGroupid" name="taskGroupId"></input>
 						<div class="form-group">
@@ -287,5 +320,44 @@
 			for="TaskGroupName" class="col-sm-3 control-label"><small>Expect
 				Result </small></label> <input type="text" class="form-control" name="expectResult"
 			placeholder="Expect Result" required>
+	</div>
+	
+		<!-- create task details page -->
+	<div class="modal fade" id="modifyTask" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="false">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Change Task Details</h4>
+				</div>
+				<div class="modal-body" style="height: 650px">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="deleteModel" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<input type="hidden" id="deleteTaskId"></input>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Delete task 
+						confirm</h4>
+				</div>
+				<div class="modal-body">Do you want delete the task?</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close
+					</button>
+					<a class="btn btn-danger" id="deleteTaskBtn" >Delete</a>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
 	</div>
 </body>

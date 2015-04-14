@@ -1,4 +1,4 @@
-package com.user.daoImpl;
+package com.task.daoImpl;
 
 import java.util.List;
 import java.util.Map;
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.entity.work.TaskGroup;
-import com.user.dao.TaskGroupDao;
+import com.task.dao.TaskGroupDao;
 
 @Component
 public class TaskGroupDaoImpl implements TaskGroupDao{
