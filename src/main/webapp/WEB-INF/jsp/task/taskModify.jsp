@@ -64,7 +64,13 @@ $(document).ready(function(){
 					name="taskCatalogId" id="accessWebRadio"
 					class="accessWebParameterModify" value="2"
 					<c:if test="${task.catalogId eq 2}">checked</c:if>> Access Web Task
-				</label> <label class="radio-inline"> <input type="radio"
+				</label>
+				 <label class="radio-inline"> <input type="radio"
+					name="taskCatalogId" id="validateRadio"
+					class="accessServerParameterModify" value="4"
+					<c:if test="${task.catalogId eq 4}">checked</c:if>> Access Server Task
+				</label>
+				 <label class="radio-inline"> <input type="radio"
 					name="taskCatalogId" id="scriptTaskRadio"
 					class="scriptTaskParameterModify" value="1"
 					<c:if test="${task.catalogId eq 1}">checked</c:if>> Script Task
@@ -73,6 +79,7 @@ $(document).ready(function(){
 					class="validateTaskParameterModify" value="3"
 					<c:if test="${task.catalogId eq 3}">checked</c:if>> Validate Task
 				</label>
+				
 			</div>
 		</div>
 		<div class="form-group">
@@ -117,6 +124,18 @@ $(document).ready(function(){
 			<label for="TaskGroupName" class="col-sm-3 control-label"><small>Expect
 					Result </small></label> <input type="text" class="form-control" name="expectResult"
 				placeholder="Expect Result" required value="${task.data.expectResult }">
+		</div>
+		<!-- Access Server Task parameter cut -->
+		<div style="display: none" id="accessServerParameterModify">
+			<label for="TaskGroupName" class="col-sm-3 control-label"><small>Server
+					Url</small></label> <input type="text" class="form-control" name="serverUrl"
+				placeholder="Server Url" required value="${task.data.hostName }"> <label
+				for="TaskGroupName" class="col-sm-3 control-label"><small>User
+					Name</small></label> <input type="text" class="form-control" name="userName"
+				placeholder="User Name" required value="${task.data.userName }"> <label
+				for="TaskGroupName" class="col-sm-3 control-label"><small>User
+					Password</small></label> <input type="password" class="form-control"
+				name="userPassword" placeholder="User Password" required value="${task.data.passWord }">
 		</div>
 </body>
 </html>

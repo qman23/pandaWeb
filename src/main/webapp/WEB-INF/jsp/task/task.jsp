@@ -30,7 +30,7 @@
 		return [ '<a class="like" href="#" title="Modify" data-toggle="modal" data-target="#modifyTask">',
 				'<i class="glyphicon glyphicon-wrench"></i>', '</a>  ',
 				'<a class="remove" href="#" title="Remove" data-toggle="modal" data-target="#deleteModel">',
-				'<i class="glyphicon glyphicon-remove"></i>', '</a>' ].join('');
+				'<i class="glyphicon glyphicon-trash"></i>', '</a>' ].join('');
 	}
 	function getTasks() {
 		$('#table-javascript').bootstrapTable(
@@ -260,6 +260,11 @@
 									class="validateTaskParameter" value="3"> Validate
 									Task
 								</label>
+								<label class="radio-inline"> <input type="radio"
+									name="taskCatalogId" id="validateRadio"
+									class="accessWebParameter" value="4"> Access Server
+									Task
+								</label>
 							</div>
 						</div>
 						<div class="form-group">
@@ -321,8 +326,9 @@
 				Result </small></label> <input type="text" class="form-control" name="expectResult"
 			placeholder="Expect Result" required>
 	</div>
-	
-		<!-- create task details page -->
+
+
+	<!-- create task details page -->
 	<div class="modal fade" id="modifyTask" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="false">
 		<div class="modal-dialog">
@@ -339,6 +345,7 @@
 		</div>
 	</div>
 	
+	<!-- delete task confirm -->
 	<div class="modal fade" id="deleteModel" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<input type="hidden" id="deleteTaskId"></input>

@@ -9,7 +9,7 @@ public class ExecuteFactory {
 	
 	private Hashtable context=new Hashtable<String,String>();
 	private final static String EXECUTER="Executer";
-	private final static String PACKAGENAME="com.work.bussiness.";
+	private final static String PACKAGENAME="com.work.taskexecuter.";
 	
 	/**
 	 * 
@@ -27,9 +27,10 @@ public class ExecuteFactory {
 	
 	private String getCatalog(int catalogId){
 		switch(catalogId){
-			case 1:return "AcessWeb";
-			case 2:return "AcessSev";
-			case 3:return "Script";
+			case 1:return "Script";
+			case 4:return "AccessSev";
+			case 3:return "Validate";
+			case 2:return "AccessWeb";
 			default :return "";
 		}
 	}

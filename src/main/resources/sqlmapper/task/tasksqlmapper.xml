@@ -3,6 +3,7 @@
 <mapper namespace="Task">
 	<resultMap id="Task" type="com.entity.work.TaskTemplate">
 		<id column="TASK_ID" property="taskId" />
+		<result column="USER_ID" property="userId" />
 		<result column="TASK_NAME" property="taskName" />
 		<result column="CATALOG_ID" property="catalogId" />
 		<result column="CREATE_DATE" property="createDate" />
@@ -18,7 +19,7 @@
 	<sql id='TASK_PARAMETER'>TASK_PARAMETER</sql>
 	<!-- task sql -->
 	<select id="findTasksByGroupId" parameterType="int" resultMap="Task">
-		SELECT T.*,TP.TASK_PARAMETER,GT.RELATIVE_TASK_ID,GT.TASK_INDEX FROM
+		SELECT T.*,TP.TASK_PARAMETER,GT.RELATIVE_TASK_ID,GT.TASK_INDEX,UTG.USER_ID FROM
 		<include refid="defaultSchema" />
 		.
 		<include refid="GROUP_TASK" />
@@ -28,7 +29,7 @@
 		<include refid="TASK" />
 		T,<include refid="defaultSchema" />
 		.
-		<include refid="TASK_PARAMETER" /> TP WHERE GT.TASK_ID=T.TASK_ID AND T.TASK_ID=TP.TASK_ID AND GT.GROUP_ID=#{groupId} order by GT.TASK_INDEX
+		<include refid="TASK_PARAMETER" /> TP,<include refid="defaultSchema" />.<include refid="USER_TASK_GROUP" /> UTG WHERE GT.TASK_ID=T.TASK_ID AND T.TASK_ID=TP.TASK_ID AND GT.GROUP_ID=#{groupId} AND UTG.GROUP_ID=GT.GROUP_ID order by GT.TASK_INDEX
 	</select>
 	<select id="findTaskByTaskId" parameterType="int" resultMap="Task">
 		SELECT T.*,TP.TASK_PARAMETER,GT.RELATIVE_TASK_ID,GT.TASK_INDEX FROM <include refid="defaultSchema" />.<include refid="TASK" /> T,
