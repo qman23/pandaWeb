@@ -19,9 +19,9 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.ibm.db2.jcc.DB2Driver" />
-		<property name="url" value="jdbc:db2://localhost:50001/panda" />
-		<property name="username" value="Allen" />
-		<property name="password" value="win.dot.hat-955" />
+		<property name="url" value="jdbc:db2://localhost:50000/panda" />
+		<property name="username" value="admin" />
+		<property name="password" value="admin123" />
 		<property name="minIdle" value="1" />        <!-- 队列中的最小等待数 -->
 		<property name="maxIdle" value="100" />        <!-- 队列中的最大等待数 -->
 		<property name="maxWait" value="10000" />        <!-- 最长等待时间，单位毫秒 -->
@@ -40,6 +40,7 @@
 	<context:component-scan base-package="com.user.*" />
 	<context:component-scan base-package="com.entity" />
 	<context:component-scan base-package="com.shiro.*" />
+	<context:component-scan base-package="com.ibm.healthchecktool.*" />
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
