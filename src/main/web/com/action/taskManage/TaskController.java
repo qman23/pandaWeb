@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.action.controller.ActionController;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.bussiness.exception.BuissnessException;
+import com.entity.work.AccessServerTask;
 import com.entity.work.AccessWebTask;
 import com.entity.work.ScriptTask;
 import com.entity.work.Task;
@@ -82,6 +84,30 @@ public class TaskController extends ActionController {
 		return mv;
 	}
 
+	@RequestMapping(value = "/home/executeTask.do", method = RequestMethod.GET)
+	public ModelAndView initexecuteTask(){
+		ModelAndView mv = new ModelAndView("task/taskExecute");
+		int userId = (Integer) getSeesionValue("CurrentUserId");
+		mv.addObject("TaskGroupList",
+				taskGroupService.findTaskGroupByUserId(userId));
+		mv.addObject("taskRunClass", "active");
+		mv.addObject("TKcurrentTab", "in");
+		return mv;
+	}
+	
+	@RequestMapping(value = "/home/executeTaskBygroupId.do", method = RequestMethod.GET)
+	public ModelAndView executeTask(int groupId){
+		ModelAndView mv = new ModelAndView("redirect:/home/executeTask.do");
+		mv.addObject("taskRunClass", "active");
+		mv.addObject("TKcurrentTab", "in");
+		try {
+			taskService.executeTask(groupId);
+		} catch (BuissnessException e) {
+			e.printStackTrace();
+		}
+		return mv;
+	}
+	
 	private Task getTaskFromRequest(HttpServletRequest request) {
 		int catalogId=Integer.parseInt(request
 				.getParameter("taskCatalogId"));
@@ -108,6 +134,15 @@ public class TaskController extends ActionController {
 			vt.setExpectResult(request.getParameter("expectResult"));
 			vt.setCatalogName(PandaConstants.VALIDATE_CATALOG_NAME);
 			t=vt;
+		}
+		
+		if (t instanceof AccessServerTask) {
+			AccessServerTask ast=new AccessServerTask();
+			ast.setHostName(request.getParameter("serverUrl"));
+			ast.setUserName(request.getParameter("userName"));
+			ast.setPassWord(request.getParameter("userPassword"));
+			ast.setCatalogName(PandaConstants.ACCESSSEV_CATALOG_NAME);
+			t=ast;
 		}
 		
 		t.setCatalogId(catalogId);

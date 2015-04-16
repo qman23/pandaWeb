@@ -13,7 +13,7 @@ public class ScriptTask extends Task {
 
 
 	public String getScript() {
-		return script;
+		return script;	
 	}
 	
 	public void setScript(String script) {

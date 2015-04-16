@@ -272,19 +272,6 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 							<li><a href="#"><i class="glyphicon glyphicon-asterisk"></i>&nbsp;Role Manage</a></li>
 							<li><a href="#"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;Permission Manage</a></li>
 						</ul></li>
-					<li><a href="#configSetting" class="nav-header collapsed"
-						data-toggle="collapse"> <i
-							class="glyphicon glyphicon-credit-card"></i> Project Check  <span
-							class="pull-right glyphicon  glyphicon-chevron-toggle"></span>
-					</a>
-						<ul id="configSetting" class="nav nav-list secondmenu collapse ${PCcurrentTab}">
-							<li class="${spvClass }"><a href="spv.do"><i
-									class="glyphicon glyphicon-globe"></i>&nbsp;Spv Check</a></li>
-							<li class="${sprtClass }"><a href="sprt.do"><i
-									class="glyphicon glyphicon-star-empty"></i>&nbsp;Sprt Check</a></li>
-							<li class="${reportClass }"><a href="reports.do"><i class="glyphicon glyphicon-star"></i>&nbsp;Check Reports</a></li>
-						</ul></li>
-
 					<li><a href="#disSetting" class="nav-header collapsed"
 						data-toggle="collapse"> <i class="glyphicon glyphicon-globe"></i>
 							Task <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
@@ -292,6 +279,8 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 						<ul id="disSetting" class="nav nav-list secondmenu collapse ${TKcurrentTab}">
 							<li class="${taskGroupClass}"><a href="taskGroupManage.do" ><i class="glyphicon glyphicon-th-list"></i>&nbsp;Task Group Manage</a></li>
 							<li class="${taskClass}"><a href="taskManage.do"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Task Manage</a></li>
+							<li class="${taskRunClass}"><a href="executeTask.do"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Run Task</a></li>
+							<li class="${taskReportClass}"><a href="taskManage.do"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Task Report</a></li>
 						</ul>
 					</li>
 					<li><a href="#dicSetting" class="nav-header collapsed"

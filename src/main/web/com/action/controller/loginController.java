@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bussiness.exception.bussnessException;
+import com.bussiness.exception.BuissnessException;
 import com.entity.security.User;
 import com.login.bussiness.UserService;
 
@@ -93,7 +93,7 @@ public class loginController extends ActionController {
 			mv.addObject("message",
 					"Change Password Sucess,Please login!");
 			mv.addObject("messageType","success");
-		} catch (bussnessException e) {
+		} catch (BuissnessException e) {
 			mv= new ModelAndView("login/changePwd");
 			mv.addObject("message",
 					e.getMessage());

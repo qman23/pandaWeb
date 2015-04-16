@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Task">
+		<resultMap id="TaskLog" type="com.entity.work.TaskLog">
+			<id column="LOG_ID" property="logId"/>
+			<result column="TASK_ID" property="taskId" />
+			<result column="USER_ID" property="userId" />
+			<result column="TASK_LOG" property="taskLog" />
+			<result column="EXECUTE_DATE" property="executeDate" />
+			<result column="TASK_STATUS" property="taskStatus" />
+		</resultMap>
+</mapper>

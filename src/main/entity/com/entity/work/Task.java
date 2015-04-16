@@ -8,7 +8,7 @@ import com.utils.business.PandaConstants;
 
 public abstract class Task {
 
-	private Task nextTask;
+	protected int userId;
 	protected int taskId;
 	protected int catalogId;
 	protected int groupId;
@@ -83,14 +83,6 @@ public abstract class Task {
 		this.groupId = groupId;
 	}
 
-	public Task getNextTask() {
-		return nextTask;
-	}
-
-	public void setNextTask(Task nextTask) {
-		this.nextTask = nextTask;
-	}
-
 	public Timestamp getLastModify() {
 		return lastModify;
 	}
@@ -107,6 +99,8 @@ public abstract class Task {
 			return PandaConstants.ACCESSWEB_CATALOG_NAME;
 		case PandaConstants.VALIDATE_CATALOG_ID:
 			return PandaConstants.VALIDATE_CATALOG_NAME;
+		case PandaConstants.ACCESSSEV_CATALOG_ID:
+			return PandaConstants.ACCESSSEV_CATALOG_NAME;
 		default:
 			return "";
 		}
@@ -120,6 +114,8 @@ public abstract class Task {
 			return new AccessWebTask();
 		case PandaConstants.VALIDATE_CATALOG_ID:
 			return new ValidateTask();
+		case PandaConstants.ACCESSSEV_CATALOG_ID:
+			return new AccessServerTask();
 		default:
 			return null;
 		}
@@ -151,5 +147,13 @@ public abstract class Task {
 
 	public void setTaskParameter(String taskParameter) {
 		this.taskParameter = taskParameter;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 }

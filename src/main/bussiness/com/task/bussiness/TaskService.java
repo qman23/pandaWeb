@@ -18,6 +18,9 @@ import java.util.List;
 
 
 
+
+import java.util.concurrent.ExecutionException;
+
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -25,9 +28,11 @@ import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bussiness.exception.BuissnessException;
 import com.entity.work.Task;
 import com.entity.work.TaskTemplate;
 import com.task.dao.TaskDao;
+import com.work.bussiness.ExecuteEngine;
 
 
 
@@ -38,7 +43,15 @@ public class TaskService {
 	private TaskDao taskDao;
 	
 	public List<Task> findTasksByGroupId(int groupId){
-		return taskDao.findTasksByGroupId(groupId);
+		int i=0;List<Task> result=taskDao.findTasksByGroupId(groupId);
+		for(;i<result.size();i++){
+			try {
+				putTaskParameter(result.get(i));
+			} catch (DocumentException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
 	}
 	
 	public Task findTaskById(int taskId){
@@ -68,6 +81,17 @@ public class TaskService {
 		taskDao.deleteGroupTask(t);
 		taskDao.deleteTask(t);
 		taskDao.deleteTaskParameter(t);
+	}
+	
+	public void executeTask(int groupId) throws BuissnessException{
+		ExecuteEngine executeEngine=new ExecuteEngine(findTasksByGroupId(groupId));
+		try {
+			executeEngine.execute();
+		} catch (InterruptedException e) {
+			throw new BuissnessException("Task execute error");
+		} catch (ExecutionException e) {
+			throw new BuissnessException("Task execute error");
+		}
 	}
 	
 	public String getTaskParameter(Task t){
