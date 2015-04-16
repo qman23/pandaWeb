@@ -2,7 +2,7 @@ package com.entity.work;
 
 import java.util.HashMap;
 
-public class AcessWebTask extends Task {
+public class AccessWebTask extends Task {
 
 	private String Url;
 	private String UserName;
@@ -37,12 +37,9 @@ public class AcessWebTask extends Task {
 	@Override
 	protected void setData() {
 		data = new HashMap<String, Object>();
-		data.put("taskId", taskId);
 		data.put("Url", Url);
 		data.put("UserName", UserName);
 		data.put("Password", Password);
-		data.put("catalogId", catalogId);
-		data.put("groupId", groupId);
 	}
 
 }

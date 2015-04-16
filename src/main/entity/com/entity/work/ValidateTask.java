@@ -4,32 +4,31 @@ import java.util.HashMap;
 
 public class ValidateTask extends Task{
 
-	private String relateTaskId;
+	private String validateExpression;
 
-	public String getRelateTaskId() {
-		return relateTaskId;
+
+	public String getValidateExpression() {
+		return validateExpression;
 	}
 
-	public void setRelateTaskId(String relateTaskId) {
-		this.relateTaskId = relateTaskId;
+	public void setValidateExpression(String validateExpression) {
+		this.validateExpression = validateExpression;
 	}
 
-	private String regularEp;
-
-	public String getRegularEp() {
-		return regularEp;
+	private String expectResult;
+	
+	public String getExpectResult() {
+		return expectResult;
 	}
 
-	public void setRegularEp(String regularEp) {
-		this.regularEp = regularEp;
+	public void setExpectResult(String expectResult) {
+		this.expectResult = expectResult;
 	}
-
+	
 	@Override
 	protected void setData() {
 		data=new HashMap<String,Object>();
-		data.put("taskId", taskId);
-		data.put("regularEp", regularEp);
-		data.put("catalogId", catalogId);
-		data.put("groupId", groupId);
+		data.put("validateExpression", validateExpression);
+		data.put("expectResult", expectResult);
 	}
 }
