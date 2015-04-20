@@ -5,11 +5,14 @@ IBM Confidential
  */
 package com.ibm.healthchecktool.bean;
 
+import org.springframework.stereotype.Service;
+
 /**
  * ConnBean
  * 
  * 
  */
+@Service("connBean")
 public class ConnBean {
     private String alias;
     private String port;
