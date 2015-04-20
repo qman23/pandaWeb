@@ -168,7 +168,7 @@
 <body>
 	<c:choose>
 		<c:when test="${not empty TaskGroupList}">
-			<div class="col-md-10 col-md-offset-3  col-md-offset-2 main">
+			<div class="col-md-10 main">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<label for="TaskGroupName" class="control-label"><small>TasK
@@ -186,7 +186,7 @@
 			</div>
 		</c:when>
 		<c:otherwise>
-			<div class="col-md-10 col-md-offset-3  col-md-offset-2 main">
+			<div class="col-md-10 main">
 				<div class="alert alert-warning" role="alert">
 					<h3>
 						<small>There is no Task Group Exist.Please create!</small>

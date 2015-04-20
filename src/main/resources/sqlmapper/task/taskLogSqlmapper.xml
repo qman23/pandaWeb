@@ -9,4 +9,13 @@
 			<result column="EXECUTE_DATE" property="executeDate" />
 			<result column="TASK_STATUS" property="taskStatus" />
 		</resultMap>
+		<sql id='TASK_LOG'>TASK_LOG</sql>
+		
+		<select id="findTaskLogsByGroupId" parameterType="int" resultMap="TaskLog">select TL.* from <include refid="defaultSchema" />.<include refid="TASK_LOG" /> TL,<include refid="defaultSchema" />.<include refid="GROUP_TASK" /> GT
+		where TL.TASK_ID =GT.TASK_ID AND GT.GROUP_ID=#{groupId}
+		</select>
+		
+		<insert id="addTaskLog" parameterType="com.entity.work.TaskLog">
+		insert into <include refid="defaultSchema" />.<include refid="TASK_LOG" /> (TASK_ID,USER_ID,TASK_LOG,EXECUTE_DATE,TASK_STATUS) values (#{taskId},#{userId},#{taskLog},#{executeDate},#{taskStatus})
+		</insert>
 </mapper>

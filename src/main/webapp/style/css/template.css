@@ -73,14 +73,7 @@ font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, Wen
  */
 
 .main {
-  padding: 20px;
-  position:absolute;
-}
-@media (min-width: 768px) {
-  .main {
-    padding-right: 40px;
-    padding-left: 40px;
-  }
+  padding-top:20px;
 }
 .main .page-header {
   margin-top: 0;

@@ -2,23 +2,6 @@ package com.task.bussiness;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import java.util.concurrent.ExecutionException;
 
 import org.dom4j.Document;
@@ -26,21 +9,28 @@ import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.bussiness.exception.BuissnessException;
 import com.entity.work.Task;
-import com.entity.work.TaskTemplate;
+import com.entity.work.TaskLog;
 import com.task.dao.TaskDao;
+import com.task.dao.TaskLogDao;
+import com.utils.business.Utils;
 import com.work.bussiness.ExecuteEngine;
 
 
 
 @Service("taskService")
+@Scope("prototype")
 public class TaskService {
 
 	@Autowired
 	private TaskDao taskDao;
+	
+	@Autowired
+	private TaskLogDao taskLogDao;
 	
 	public List<Task> findTasksByGroupId(int groupId){
 		int i=0;List<Task> result=taskDao.findTasksByGroupId(groupId);
@@ -83,10 +73,28 @@ public class TaskService {
 		taskDao.deleteTaskParameter(t);
 	}
 	
+	public void addTaskLog(TaskLog tl){
+		taskLogDao.addTaskLog(tl);
+	}
+	
+	public List<TaskLog> findTaskLogsByGroupId(int groupId){
+		return taskLogDao.findTaskLogsByGroupId(groupId);
+	}
+	
+	public void addTaskLog(Task t,String log,int status){
+		TaskLog tl=new TaskLog();
+		tl.setTaskId(t.getTaskId());
+		tl.setUserId(t.getUserId());
+		tl.setTaskLog(log);
+		tl.setExecuteDate(Utils.getCurrentTimes());
+		tl.setTaskStatus(status);
+		addTaskLog(tl);
+	}
+	
 	public void executeTask(int groupId) throws BuissnessException{
 		ExecuteEngine executeEngine=new ExecuteEngine(findTasksByGroupId(groupId));
 		try {
-			executeEngine.execute();
+			executeEngine.submitExecuteRequest();
 		} catch (InterruptedException e) {
 			throw new BuissnessException("Task execute error");
 		} catch (ExecutionException e) {
@@ -119,6 +127,4 @@ public class TaskService {
 		}
 		return t;
 	}
-	
-	
 }

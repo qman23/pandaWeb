@@ -37,6 +37,9 @@
 			   	this.getBarDiv().hide();
 		   }
  };
+$(document).ready(function(){
+$(document.body).css('width',window.screen.availWidth);
+})
 </script>
 <style>
 html {

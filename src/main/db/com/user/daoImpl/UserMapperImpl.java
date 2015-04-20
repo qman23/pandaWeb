@@ -5,12 +5,12 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.entity.security.User;
 import com.user.dao.UserDao;
 
-@Component
+@Repository
 public class UserMapperImpl implements UserDao{
 
 	@Autowired

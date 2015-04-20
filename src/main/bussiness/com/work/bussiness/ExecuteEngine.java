@@ -13,21 +13,34 @@ import java.util.concurrent.Executors;
 import org.apache.log4j.Logger;
 
 import com.entity.work.Task;
+import com.task.bussiness.TaskService;
+import com.utils.business.SpringUtil;
 
 
-public class ExecuteEngine implements Callable<Map>{
+/**
+ * task execte engine 
+ * @author Allen
+ *
+ */
+public class ExecuteEngine extends ExecuteFactory implements Callable<Map>{
 	
 	private static Logger log=Logger.getLogger(ExecuteEngine.class.getName());
 	
 	private List<Task> tasks;
-	private ExecuteFactory executer;
-	public ExecuteEngine(List<Task> tasks){
-		this.tasks=tasks;
-		executer=  new ExecuteFactory();
+
+	private TaskService taskService;
+	
+	public ExecuteEngine(List<Task> taskList){
+		tasks=taskList;
+		taskService=(TaskService) SpringUtil.getBean("taskService");
 	}
 	
-	public  void execute() throws InterruptedException, ExecutionException{
-		
+	/**
+	 * 
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public void submitExecuteRequest() throws InterruptedException, ExecutionException{
 			if(tasks!=null&&tasks.size()!=0){
 				log.info("Submit task executer");
 			 	ExecutorService exec = Executors.newFixedThreadPool(tasks.size());
@@ -38,16 +51,28 @@ public class ExecuteEngine implements Callable<Map>{
 		            exec.shutdown(); 
 		       log.info("Complete Submit task executer");
 			}
-		
 	}
 
 	public Map call() throws Exception {
 		Map result=null;
 		for(Task t:tasks){
 			log.info("Task Id:"+t.getTaskId()+"--Task Name:"+t.getTaskName()+"--Task begin execute!");
-			result=executer.excuteTask(t);
+			result=this.excuteTask(t);
+			taskService.addTaskLog(t,result.toString(),1);
 			log.info("Task Id:"+t.getTaskId()+"--Task Name:"+t.getTaskName()+"--Running result:"+result);
 		}
 		return result;
+	}
+
+	@Override
+	public void preExecuteTask(Map context) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void afterExecuteTask(Map context) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -4,10 +4,13 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.action.controller.ActionController;
@@ -26,8 +29,11 @@ import com.utils.business.PandaConstants;
 import com.utils.business.Utils;
 
 @Controller
+@Scope(WebApplicationContext.SCOPE_SESSION)
 public class TaskController extends ActionController {
 
+	private static Logger log=Logger.getLogger(TaskController.class.getName());
+	
 	@Autowired
 	private TaskGroupService taskGroupService;
 	@Autowired

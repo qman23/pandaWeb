@@ -13,7 +13,7 @@ public class ScriptExecuter implements Executer{
 	private static Logger log=Logger.getLogger(ScriptExecuter.class.getName());
 	
 	public Map execute(Task t, Map context) {
-		log.info(("Task Id:"+t.getTaskId()+"--Name:"+t.getTaskName()+"--Running Complate!"));
+		log.info(("User Id:"+t.getUserId()+"--Task Id:"+t.getTaskId()+"--Name:"+t.getTaskName()+"--Task Parameter:"+t.getTaskParameter()+"--Running Complate!"));
 		context.put(t.getTaskId() ,"Task Id:"+t.getTaskId()+" Name:"+t.getTaskName()+"-Running Complate!");
 		return context;
 	}

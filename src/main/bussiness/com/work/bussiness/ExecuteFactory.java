@@ -4,12 +4,19 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import com.entity.work.Task;
+import com.utils.business.PandaConstants;
 
-public class ExecuteFactory {
+/**
+ * Task executeFactory
+ * @author Allen
+ *
+ */
+public abstract class ExecuteFactory {
 	
+	/**
+	 * task chian execute context;
+	 */
 	private Hashtable context=new Hashtable<String,String>();
-	private final static String EXECUTER="Executer";
-	private final static String PACKAGENAME="com.work.taskexecuter.";
 	
 	/**
 	 * 
@@ -19,12 +26,17 @@ public class ExecuteFactory {
 	@SuppressWarnings("unchecked")
 	private <T> T getClassInstance(String className){
 		try {
-			return (T) Class.forName(PACKAGENAME+className).newInstance();
+			return (T) Class.forName(PandaConstants.PACKAGENAME+className).newInstance();
 		} catch (Exception e){
 			return null;
 		}
 	}
 	
+	/**
+	 * getTaskCatalog 
+	 * @param catalogId
+	 * @return
+	 */
 	private String getCatalog(int catalogId){
 		switch(catalogId){
 			case 1:return "Script";
@@ -40,8 +52,8 @@ public class ExecuteFactory {
 	 * @param taskCatalog
 	 * @return TaskExecuter
 	 */
-	public Executer getTaskExecuter(int catalogId){
-		return getClassInstance(getCatalog(catalogId)+EXECUTER);
+	private Executer getTaskExecuter(int catalogId){
+		return getClassInstance(getCatalog(catalogId)+PandaConstants.EXECUTER);
 	}
 	
 	
@@ -50,6 +62,19 @@ public class ExecuteFactory {
 	 * @param tasks
 	 */
 	public Map excuteTask(Task task){
-		return getTaskExecuter(task.getCatalogId()).execute(task, context);
+		preExecuteTask(context);
+		Map result=getTaskExecuter(task.getCatalogId()).execute(task, context);
+		afterExecuteTask(context);
+		return result;
 	}
+	
+	/**
+	 * Before task execute, execute some prepare work
+	 */
+	public abstract void preExecuteTask(Map context);
+	
+	/**
+	 * After task execute, do some clean up work
+	 */
+	public abstract void afterExecuteTask(Map context);
 }
