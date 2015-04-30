@@ -13,4 +13,7 @@ public final class PandaConstants {
 	
 	public final static String EXECUTER="Executer";
 	public final static String PACKAGENAME="com.work.taskexecuter.";
+	
+	public static final int TASK_SUCCESS=1;
+	public static final int TASK_FAILED=0;
 }

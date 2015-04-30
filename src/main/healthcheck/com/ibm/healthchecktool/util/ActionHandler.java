@@ -1,5 +1,7 @@
 package com.ibm.healthchecktool.util;
 
+import java.io.IOException;
+
 import com.ibm.healthchecktool.bean.ConnBean;
 
 public class ActionHandler {
@@ -7,7 +9,7 @@ public class ActionHandler {
 		return util.execCmd(commond);
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		ActionHandler handler = new ActionHandler();
 		SSHUtil util = new SSHUtil();
 		try {

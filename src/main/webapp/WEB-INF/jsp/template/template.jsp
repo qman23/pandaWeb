@@ -38,7 +38,7 @@
 		   }
  };
 $(document).ready(function(){
-$(document.body).css('width',window.screen.availWidth);
+$(document.body).css('width',window.screen.availWidth*0.98);
 })
 </script>
 <style>
@@ -288,12 +288,11 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 					</li>
 					<li><a href="#dicSetting" class="nav-header collapsed"
 						data-toggle="collapse"> <i class="glyphicon glyphicon-bold"></i>
-							Sever health <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
+							Blue Page Query <span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
 					</a>
-						<ul id="dicSetting" class="nav nav-list secondmenu collapse">
-							<li><a href="#"><i
-									class="glyphicon glyphicon-text-width"></i>&nbsp;health check</a></li>
-								<li><a href="#"><i class="glyphicon glyphicon-th-list"></i>&nbsp;View log</a></li>	
+						<ul id="dicSetting" class="nav nav-list secondmenu collapse ${BPcurrentTab}">
+							<li class="${bluePageClass}"><a href="bluePage.do"><i
+									class="glyphicon glyphicon-text-width"></i>&nbsp;Blue Page Request</a></li>
 						</ul></li>
 					<li><a href="#"> <i class="glyphicon glyphicon-fire"></i>
 							About Us 

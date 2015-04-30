@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bussiness.exception.BuissnessException;
+import com.bussiness.exception.BussinessException;
 import com.entity.security.User;
 import com.user.dao.UserDao;
 
@@ -26,13 +26,13 @@ public class UserService {
 		userDao.updateUser(user);
 	}
 	
-	public void changeUser(User user,String newpasswd) throws BuissnessException{
+	public void changeUser(User user,String newpasswd) throws BussinessException{
 		User result=this.findByEmail(user.getEmail());
 		if(result.getPassword().equals(user.getPassword())){
 			result.setPassword(newpasswd);
 			this.updateUser(result);
 		}else{
-			throw new BuissnessException("Invalid Current password!");
+			throw new BussinessException("Invalid Current password!");
 		}
 	}
 	

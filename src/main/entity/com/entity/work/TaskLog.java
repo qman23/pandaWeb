@@ -2,11 +2,14 @@ package com.entity.work;
 
 import java.sql.Timestamp;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 public class TaskLog {
 	private int logId;
 	private int userId;
-	private int taskId;
+	private int groupId;
 	private String taskLog;
+	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	private Timestamp executeDate;
 	private int taskStatus;
 	
@@ -18,12 +21,12 @@ public class TaskLog {
 		this.userId = userId;
 	}
 
-	public int getTaskId() {
-		return taskId;
+	public int getGroupId() {
+		return groupId;
 	}
 
-	public void setTaskId(int taskId) {
-		this.taskId = taskId;
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
 	}
 
 	public String getTaskLog() {

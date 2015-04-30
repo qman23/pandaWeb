@@ -3,7 +3,7 @@
 <mapper namespace="Task">
 		<resultMap id="TaskLog" type="com.entity.work.TaskLog">
 			<id column="LOG_ID" property="logId"/>
-			<result column="TASK_ID" property="taskId" />
+			<result column="GROUP_ID" property="groupId" />
 			<result column="USER_ID" property="userId" />
 			<result column="TASK_LOG" property="taskLog" />
 			<result column="EXECUTE_DATE" property="executeDate" />
@@ -11,11 +11,15 @@
 		</resultMap>
 		<sql id='TASK_LOG'>TASK_LOG</sql>
 		
-		<select id="findTaskLogsByGroupId" parameterType="int" resultMap="TaskLog">select TL.* from <include refid="defaultSchema" />.<include refid="TASK_LOG" /> TL,<include refid="defaultSchema" />.<include refid="GROUP_TASK" /> GT
-		where TL.TASK_ID =GT.TASK_ID AND GT.GROUP_ID=#{groupId}
+		<select id="findTaskLogsByGroupId" parameterType="int" resultMap="TaskLog">
+		select TL.* from <include refid="defaultSchema" />.<include refid="TASK_LOG" /> TL where TL.GROUP_ID=#{groupId}
 		</select>
 		
 		<insert id="addTaskLog" parameterType="com.entity.work.TaskLog">
-		insert into <include refid="defaultSchema" />.<include refid="TASK_LOG" /> (TASK_ID,USER_ID,TASK_LOG,EXECUTE_DATE,TASK_STATUS) values (#{taskId},#{userId},#{taskLog},#{executeDate},#{taskStatus})
+		insert into <include refid="defaultSchema" />.<include refid="TASK_LOG" /> (GROUP_ID,USER_ID,TASK_LOG,EXECUTE_DATE,TASK_STATUS) values (#{groupId},#{userId},#{taskLog},#{executeDate},#{taskStatus})
 		</insert>
+		
+		<delete id="deleteTaskLogsByGroupId" parameterType="int" >
+		delete from <include refid="defaultSchema" />.<include refid="TASK_LOG" /> TL where TL.GROUP_ID=#{groupId})
+		</delete>
 </mapper>

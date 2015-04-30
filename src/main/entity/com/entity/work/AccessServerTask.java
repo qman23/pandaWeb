@@ -7,6 +7,7 @@ public class AccessServerTask extends Task {
 	private String hostName;
 	private String userName;
 	private String passWord;
+	private String port;
 	
 	@Override
 	protected void setData() {
@@ -14,6 +15,7 @@ public class AccessServerTask extends Task {
 		super.data.put("hostName", hostName);
 		super.data.put("userName", userName);
 		super.data.put("passWord", passWord);
+		super.data.put("port", port);
 	}
 
 	public String getHostName() {
@@ -38,5 +40,13 @@ public class AccessServerTask extends Task {
 
 	public void setPassWord(String passWord) {
 		this.passWord = passWord;
+	}
+
+	public String getPort() {
+		return port;
+	}
+
+	public void setPort(String port) {
+		this.port = port;
 	}
 }

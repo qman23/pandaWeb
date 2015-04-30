@@ -57,9 +57,10 @@ public class sprtController {
 	@RequestMapping(value="/home/getLogs.do" , method=RequestMethod.GET)
 	public void selectLogFiles(PrintWriter writer){
 		connectToServer();
-		String cmd = "cd "+ connBean.getPath()+";ls *.txt";
+		String cmd = "cd "+ connBean.getPath()+"";
 		try {
 			String tem = sSHUtil.execCmd(cmd);
+			tem=sSHUtil.execCmd("ls *.txt");
 			String[] result = tem.split("\n");
 			String jsonString = JSON.toJSONString(result,SerializerFeature.PrettyFormat);
 			writer.write(jsonString);

@@ -14,7 +14,82 @@ $(document).ready(function(){
 $("#executeTask").click(function(){
 		 window.document.location.href="<%=basePath%>"+'home/executeTaskBygroupId.do?groupId='+$('#taskGroupNameSelect').children('option:selected').attr("id")
 });
+getTasks();
+$("#taskGroupNameSelect").change(
+								function() {
+									$('#table-javascript').bootstrapTable(
+											'refresh',
+											{
+												query : {
+													groupId : $(this).children(
+															'option:selected')
+															.attr("id")
+												}
+											});
+								});
 })
+function tasklogFormatter(value, row, index){
+ return "<textarea style='width:1000px;height:250px;font-size: 12px;color: white;background: black;'>"+value+"</textarea>";
+}
+function getTasks() {
+		$('#table-javascript').bootstrapTable(
+				{
+					method : 'get',
+					url : 'getTaskLogs.do',
+					queryParams : function(p) {
+						return {
+							groupId : $("#taskGroupNameSelect").children(
+									'option:selected').attr("id")
+						};
+					},
+					cache : false,
+					height : 580,
+					striped : true,
+					pagination : true,
+					pageSize : 50,
+					pageList : [ 10, 25, 50, 100, 200 ],
+					search : true,
+					showColumns : true,
+					showRefresh : true,
+					minimumCountColumns : 2,
+					clickToSelect : true,
+					columns : [ {
+						field : 'state',
+						checkbox : true
+					}, {
+						field : 'logId',
+						title : 'Log ID',
+						align : 'center',
+						valign : 'middle',
+						sortable : true
+					}, {
+						field : 'groupId',
+						title : 'Group Id',
+						align : 'center',
+						valign : 'middle',
+						sortable : true
+					}, {
+						field : 'executeDate',
+						title : 'Execute Date',
+						align : 'center',
+						valign : 'middle',
+						sortable : true
+					}, {
+						field : 'taskLog',
+						title : 'Task Log',
+						align : 'center',
+						valign : 'middle',
+						sortable : true,
+						formatter:tasklogFormatter
+					}, {
+						field : 'taskStatus',
+						title : 'Task Status',
+						align : 'center',
+						valign : 'middle',
+						sortable : true
+					} ]
+				});
+	}
 </script>
 </head>
 <body>

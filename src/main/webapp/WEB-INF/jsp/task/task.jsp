@@ -175,7 +175,10 @@
 								Group Name</small></label> <select class="form-control" id="taskGroupNameSelect"
 							style="width: auto">
 							<c:forEach items="${TaskGroupList}" var="taskGroup">
-								<option class="groupNameOption" id="${taskGroup.groupId}">${taskGroup.groupName}</option>
+								<c:if test="${taskGroup.groupId eq groupId }">
+									<option class="groupNameOption" selected id="${taskGroup.groupId}">${taskGroup.groupName}</option>
+								</c:if>
+								<option class="groupNameOption"  id="${taskGroup.groupId}">${taskGroup.groupName}</option>
 							</c:forEach>
 						</select> <label for="TaskGroupName" class="control-label"><small>New
 								Task</small></label> <input class=" btn btn-default" type="button" value="New" id="newTaskBtn"
@@ -207,7 +210,7 @@
 						aria-hidden="true">&times;</button>
 					<h4 class="modal-title" id="myModalLabel">Task initialize Details</h4>
 				</div>
-				<div class="modal-body" style="height: 650px">
+				<div class="modal-body" style="height: 700px">
 					<form role="form" action="saveTask.do"
 						method="Post">
 						<input type="hidden" id="taskGroupid" name="taskGroupId"></input>
@@ -262,7 +265,7 @@
 								</label>
 								<label class="radio-inline"> <input type="radio"
 									name="taskCatalogId" id="validateRadio"
-									class="accessWebParameter" value="4"> Access Server
+									class="accessServerParameter" value="4"> Access Server
 									Task
 								</label>
 							</div>
@@ -276,10 +279,10 @@
 									placeholder="Server Url" required> <label
 									for="TaskGroupName" class="col-sm-3 control-label"><small>User
 										Name</small></label> <input type="text" class="form-control" name="userName"
-									placeholder="User Name" required> <label
+									placeholder="User Name" > <label
 									for="TaskGroupName" class="col-sm-3 control-label"><small>User
 										Password</small></label> <input type="password" class="form-control"
-									name="userPassword" placeholder="User Password" required>
+									name="userPassword" placeholder="User Password" >
 							</div>
 						</div>
 						<div class="form-group">
@@ -303,19 +306,34 @@
 			placeholder="Server Url" required> <label for="TaskGroupName"
 			class="col-sm-3 control-label"><small>User Name</small></label> <input
 			type="text" class="form-control" name="userName"
+			placeholder="User Name" > <label for="TaskGroupName"
+			class="col-sm-3 control-label"><small>User Password</small></label> <input
+			type="password" class="form-control" name="userPassword"
+			placeholder="User Password" >
+	</div>
+	<!-- accessServerParameter -->
+	<div style="display: none" id="accessServerParameter">
+		<label for="TaskGroupName" class="col-sm-3 control-label"><small>Server
+				Url</small></label> <input type="text" class="form-control" name="serverUrl"
+			placeholder="Server Url" required> <label for="TaskGroupName"
+			class="col-sm-3 control-label"><small>User Name</small></label> <input
+			type="text" class="form-control" name="userName"
 			placeholder="User Name" required> <label for="TaskGroupName"
 			class="col-sm-3 control-label"><small>User Password</small></label> <input
 			type="password" class="form-control" name="userPassword"
-			placeholder="User Password" required>
+			placeholder="User Password" required><label for="TaskGroupName"
+			class="col-sm-3 control-label"><small>Port</small></label> <input
+			type="text" class="form-control" name="port"
+			placeholder="Port" required>
 	</div>
 	<!-- Script Task  parameter cut -->
 	<div style="display: none" id="scriptTaskParameter">
 		<label for="TaskGroupName" class="col-sm-3 control-label"><small>Script
-		</small></label> <input type="text" class="form-control" name="script"
-			placeholder="Script need to execute" required> <label
+		</small></label> <textarea rows="2" class="form-control" name="script"
+			placeholder="Script need to execute" required></textarea> <label
 			for="TaskGroupName" class="col-sm-3 control-label"><small>Expect
 				Result </small></label> <input type="text" class="form-control" name="expectResult"
-			placeholder="Expect Result" required>
+			placeholder="Expect Result" required></input>
 	</div>
 	<!-- Validate Task parameter cut -->
 	<div style="display: none" id="validateTaskParameter">
@@ -338,7 +356,7 @@
 						aria-hidden="true">&times;</button>
 					<h4 class="modal-title" id="myModalLabel">Change Task Details</h4>
 				</div>
-				<div class="modal-body" style="height: 650px">
+				<div class="modal-body" style="height: 700px">
 					
 				</div>
 			</div>

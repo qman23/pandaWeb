@@ -1,5 +1,5 @@
 <body>
-	<div class="col-md-10 col-md-offset-3  col-md-offset-2 main">
+	<div class="col-md-10  main">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				Web

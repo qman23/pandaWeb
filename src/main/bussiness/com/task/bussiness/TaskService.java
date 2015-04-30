@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import com.bussiness.exception.BuissnessException;
+import com.bussiness.exception.BussinessException;
 import com.entity.work.Task;
 import com.entity.work.TaskLog;
 import com.task.dao.TaskDao;
@@ -83,7 +83,7 @@ public class TaskService {
 	
 	public void addTaskLog(Task t,String log,int status){
 		TaskLog tl=new TaskLog();
-		tl.setTaskId(t.getTaskId());
+		tl.setGroupId(t.getGroupId());
 		tl.setUserId(t.getUserId());
 		tl.setTaskLog(log);
 		tl.setExecuteDate(Utils.getCurrentTimes());
@@ -91,14 +91,18 @@ public class TaskService {
 		addTaskLog(tl);
 	}
 	
-	public void executeTask(int groupId) throws BuissnessException{
+	public List<TaskLog> findTaskLog(int groupId){
+		return taskLogDao.findTaskLogsByGroupId(groupId);
+	}
+	
+	public void executeTask(int groupId) throws BussinessException{
 		ExecuteEngine executeEngine=new ExecuteEngine(findTasksByGroupId(groupId));
 		try {
 			executeEngine.submitExecuteRequest();
 		} catch (InterruptedException e) {
-			throw new BuissnessException("Task execute error");
+			throw new BussinessException("Task execute error");
 		} catch (ExecutionException e) {
-			throw new BuissnessException("Task execute error");
+			throw new BussinessException("Task execute error");
 		}
 	}
 	

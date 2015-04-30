@@ -102,16 +102,16 @@ $(document).ready(function(){
 				placeholder="Server Url" required value="${task.data.Url }"> <label
 				for="TaskGroupName" class="col-sm-3 control-label"><small>User
 					Name</small></label> <input type="text" class="form-control" name="userName"
-				placeholder="User Name" required value="${task.data.UserName }"> <label
+				placeholder="User Name"  value="${task.data.UserName }"> <label
 				for="TaskGroupName" class="col-sm-3 control-label"><small>User
 					Password</small></label> <input type="password" class="form-control"
-				name="userPassword" placeholder="User Password" required value="${task.data.Password }">
+				name="userPassword" placeholder="User Password"  value="${task.data.Password }">
 		</div>
 		<!-- Script Task  parameter cut -->
 		<div style="display: none" id="scriptTaskParameterModify">
 			<label for="TaskGroupName" class="col-sm-3 control-label"><small>Script
-			</small></label> <input type="text" class="form-control" name="script"
-				placeholder="Script need to execute" required value="${task.data.script }"> <label
+			</small></label> <textarea rows="2" class="form-control" name="script"
+				placeholder="Script need to execute" required >${task.data.script }</textarea> <label
 				for="TaskGroupName" class="col-sm-3 control-label"><small>Expect
 					Result </small></label> <input type="text" class="form-control" name="expectResult"
 				placeholder="Expect Result" required value="${task.data.expectResult }">
@@ -136,6 +136,9 @@ $(document).ready(function(){
 				for="TaskGroupName" class="col-sm-3 control-label"><small>User
 					Password</small></label> <input type="password" class="form-control"
 				name="userPassword" placeholder="User Password" required value="${task.data.passWord }">
+				<label for="TaskGroupName" class="col-sm-3 control-label"><small>Port
+				</small></label> <input type="text" class="form-control"
+				name="port" placeholder="Port" required value="${task.data.port }">
 		</div>
 </body>
 </html>

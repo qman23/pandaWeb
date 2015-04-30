@@ -1,6 +1,7 @@
 package com.action.taskManage;
 
 import java.io.PrintWriter;
+import java.io.Serializable;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.action.controller.ActionController;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.bussiness.exception.BuissnessException;
+import com.bussiness.exception.BussinessException;
 import com.entity.work.AccessServerTask;
 import com.entity.work.AccessWebTask;
 import com.entity.work.ScriptTask;
@@ -30,7 +31,9 @@ import com.utils.business.Utils;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
-public class TaskController extends ActionController {
+public class TaskController extends ActionController implements Serializable {
+
+	private static final long serialVersionUID = -1643088089856236132L;
 
 	private static Logger log=Logger.getLogger(TaskController.class.getName());
 	
@@ -62,6 +65,7 @@ public class TaskController extends ActionController {
 	public ModelAndView saveTask(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("redirect:/home/taskManage.do");
 		Task t=getTaskFromRequest(request);
+		mv.addObject("groupId",request.getParameter("taskGroupId"));
 		taskService.saveTask(t);
 		return mv;
 	}
@@ -77,6 +81,7 @@ public class TaskController extends ActionController {
 	public ModelAndView updateTask(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("redirect:/home/taskManage.do");
 		Task t=getTaskFromRequest(request);
+		mv.addObject("groupId",request.getParameter("taskGroupId"));
 		taskService.updateTask(t);
 		return mv;
 	}
@@ -101,6 +106,14 @@ public class TaskController extends ActionController {
 		return mv;
 	}
 	
+	@RequestMapping(value = "/home/getTaskLogs.do", method = RequestMethod.GET)
+	public void getTaskLogs(int groupId,PrintWriter writer){
+		writer.write(JSON.toJSONString(taskService.findTaskLogsByGroupId(groupId),
+				SerializerFeature.PrettyFormat));
+		writer.flush();
+		writer.close();
+	}
+	
 	@RequestMapping(value = "/home/executeTaskBygroupId.do", method = RequestMethod.GET)
 	public ModelAndView executeTask(int groupId){
 		ModelAndView mv = new ModelAndView("redirect:/home/executeTask.do");
@@ -108,7 +121,7 @@ public class TaskController extends ActionController {
 		mv.addObject("TKcurrentTab", "in");
 		try {
 			taskService.executeTask(groupId);
-		} catch (BuissnessException e) {
+		} catch (BussinessException e) {
 			e.printStackTrace();
 		}
 		return mv;
@@ -129,8 +142,9 @@ public class TaskController extends ActionController {
 		if (t instanceof AccessWebTask) {
 			AccessWebTask awt=new AccessWebTask();
 			awt.setUrl(request.getParameter("serverUrl"));
-			awt.setUserName(request.getParameter("userName"));
-			awt.setPassword(request.getParameter("userPassword"));
+			awt.setUserName(Utils.isStringNull(request.getParameter("userName"))?"":request.getParameter("userName"));
+			String password=request.getParameter("userPassword");
+			awt.setPassword(Utils.isStringNull(password)?"":password);
 			awt.setCatalogName(PandaConstants.ACCESSWEB_CATALOG_NAME);
 			t=awt;
 		}
@@ -146,7 +160,8 @@ public class TaskController extends ActionController {
 			AccessServerTask ast=new AccessServerTask();
 			ast.setHostName(request.getParameter("serverUrl"));
 			ast.setUserName(request.getParameter("userName"));
-			ast.setPassWord(request.getParameter("userPassword"));
+			ast.setPassWord(Utils.encrypt(request.getParameter("userPassword")));
+			ast.setPort(request.getParameter("port"));
 			ast.setCatalogName(PandaConstants.ACCESSSEV_CATALOG_NAME);
 			t=ast;
 		}

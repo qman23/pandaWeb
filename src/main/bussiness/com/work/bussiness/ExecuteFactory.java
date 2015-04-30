@@ -3,6 +3,7 @@ package com.work.bussiness;
 import java.util.Hashtable;
 import java.util.Map;
 
+import com.bussiness.exception.BussinessException;
 import com.entity.work.Task;
 import com.utils.business.PandaConstants;
 
@@ -60,21 +61,22 @@ public abstract class ExecuteFactory {
 	/**
 	 * 
 	 * @param tasks
+	 * @throws BussinessException 
 	 */
-	public Map excuteTask(Task task){
-		preExecuteTask(context);
+	public Map excuteTask(Task task) throws BussinessException{
+		preExecuteTask(task,context);
 		Map result=getTaskExecuter(task.getCatalogId()).execute(task, context);
-		afterExecuteTask(context);
+		afterExecuteTask(task,context);
 		return result;
 	}
 	
 	/**
 	 * Before task execute, execute some prepare work
 	 */
-	public abstract void preExecuteTask(Map context);
+	public abstract void preExecuteTask(Task t,Map context);
 	
 	/**
 	 * After task execute, do some clean up work
 	 */
-	public abstract void afterExecuteTask(Map context);
+	public abstract void afterExecuteTask(Task t,Map context);
 }
