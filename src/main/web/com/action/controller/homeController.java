@@ -33,4 +33,9 @@ public class homeController extends ActionController {
 		model.addAttribute("PCcurrentTab","in");
 		return "reports";
 	}
+	
+	@RequestMapping("/home/aboutUs.do")
+	public String aboutUs(Model model) {
+		return "aboutUs";
+	}
 }

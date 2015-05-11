@@ -7,6 +7,15 @@ import org.apache.log4j.Logger;
 import com.entity.work.Task;
 import com.work.bussiness.Executer;
 
+
+/**
+ * 
+ * @author Allen
+ *
+ * validate the relative task result by the regular expressions.
+ * 
+ * 
+ */
 public class ValidateExecuter implements Executer{
 
 	private static Logger log=Logger.getLogger(ValidateExecuter.class.getName());

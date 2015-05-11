@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.bussiness.exception.BussinessException;
+import com.bussiness.exception.BusinessException;
 import com.entity.work.Task;
 import com.ibm.healthchecktool.bean.ConnBean;
 import com.ibm.healthchecktool.util.SSHUtil;
@@ -13,11 +13,26 @@ import com.utils.business.SpringUtil;
 import com.utils.business.Utils;
 import com.work.bussiness.Executer;
 
+/**
+ * 
+ * @author Allen
+ *
+ * Provide the access server function .
+ * 
+ * access server by the server host name , user name or password.
+ * 
+ * put the access status into context map.
+ */
 public class AccessSevExecuter implements Executer{
 
 	private static Logger log=Logger.getLogger(AccessSevExecuter.class.getName());
 
-	public Map execute(Task t, Map context) throws BussinessException {
+	/**
+	 * implement the executer interface.
+	 * 
+	 * execute the task and put the access status into context map.
+	 */
+	public Map execute(Task t, Map context) throws BusinessException {
 		SSHUtil sSHUtil=(SSHUtil) SpringUtil.getBean("sSHUtil");
 		ConnBean connBean=new ConnBean();
 		connBean.setHost(String.valueOf(t.getData().get("hostName")));
@@ -30,10 +45,10 @@ public class AccessSevExecuter implements Executer{
 		log.info("Task--Executer:"+AccessSevExecuter.class.getName()+",ssh Connection build complete!");
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-			throw new BussinessException(e);
+			throw new BusinessException(e);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new BussinessException(e);
+			throw new BusinessException(e);
 		}
 		Utils.putExecuteResult(t, context, "Login Server :"+String.valueOf(t.getData().get("hostName"))+" success!");
 		context.put(t.getTaskId(), PandaConstants.TASK_SUCCESS);

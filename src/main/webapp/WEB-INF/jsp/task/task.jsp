@@ -1,6 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form"%>  
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -36,7 +37,7 @@
 		$('#table-javascript').bootstrapTable(
 				{
 					method : 'get',
-					url : 'getTasks.do',
+					url : '<%=basePath%>home/getTasks.do',
 					queryParams : function(p) {
 						return {
 							groupId : $("#taskGroupNameSelect").children(
@@ -146,7 +147,7 @@
 						$('#deleteTaskBtn').click(function(){
 							$.ajax({
 								   type: "post",
-								   url: "<%=basePath%>/deleteTask.do",
+								   url: "<%=basePath%>home/deleteTask.do",
 								   data: "taskId="+$('#deleteTaskId').val(),
 								   success: function(msg){
 								     $('#table-javascript').bootstrapTable(
@@ -180,7 +181,8 @@
 								</c:if>
 								<option class="groupNameOption"  id="${taskGroup.groupId}">${taskGroup.groupName}</option>
 							</c:forEach>
-						</select> <label for="TaskGroupName" class="control-label"><small>New
+						</select> 
+						<label for="TaskGroupName" class="control-label"><small>New
 								Task</small></label> <input class=" btn btn-default" type="button" value="New" id="newTaskBtn"
 							data-toggle="modal" data-target="#addNewTask">
 					</div>

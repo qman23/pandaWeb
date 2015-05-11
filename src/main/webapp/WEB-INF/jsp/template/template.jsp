@@ -11,6 +11,7 @@
 <html>
 <head>
 <title>Welcome to Panda</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="<%=basePath%>style/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=basePath%>style/css/template.css">
 <link rel="stylesheet" href="<%=basePath%>style/css/bootstrap-table.css">
@@ -204,6 +205,26 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 .collapsed.glyphicon-chevron-toggle:before {
 	content: "\e114";
 }
+.bs-docs-footer{
+	border-top: 1px solid #e5e5e5;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	margin-top: 100px;
+	color: #767676;
+	text-align: center;
+}
+.bs-docs-footer p {
+	margin-bottom: 0;
+}
+
+.bs-docs-footer-links {
+	padding-left: 0;
+	margin-top: 20px;
+}
+.bs-docs-footer-links li {
+	display: inline;
+	padding: 0 2px;
+}
 </style>
 <decorator:head/>
 </head>
@@ -273,7 +294,6 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 						<ul id="systemSetting" class="nav nav-list secondmenu collapse ${SMcurrentTab}">
 							<li class="${userManageClass}"><a  href="userManage.do"><i class="glyphicon glyphicon-user"></i>&nbsp;User Manage</a></li>
 							<li><a href="#"><i class="glyphicon glyphicon-asterisk"></i>&nbsp;Role Manage</a></li>
-							<li><a href="#"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;Permission Manage</a></li>
 						</ul></li>
 					<li><a href="#disSetting" class="nav-header collapsed"
 						data-toggle="collapse"> <i class="glyphicon glyphicon-globe"></i>
@@ -294,7 +314,7 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 							<li class="${bluePageClass}"><a href="bluePage.do"><i
 									class="glyphicon glyphicon-text-width"></i>&nbsp;Blue Page Request</a></li>
 						</ul></li>
-					<li><a href="#"> <i class="glyphicon glyphicon-fire"></i>
+					<li><a href="aboutUs.do"> <i class="glyphicon glyphicon-fire"></i>
 							About Us 
 					</a></li>
 
@@ -308,14 +328,23 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 							var progress2=$("#progress_2").val();
 							progressUtils.set(progress2);
 				</script>
+			
 		</div>
 	</div>
 
 
 
-
+	<footer class="bs-docs-footer" >
+	  <div class="container">
+	    <p>Designed and built with all the love in the world by <a href="mailto:wuwangjun123@163.com" target="_blank">@Allen</a> and <a href="mailto:lizhiwcd@cn.ibm.com" target="_blank">@Lee</a>.</p>
+	    <p>Maintained by the <a href="https://github.com/qman23/pandaWeb/">core team</a> with the help of <a href="https://github.com/qman23/pandaWeb/graphs/contributors">our contributors</a>.</p>
+	    <ul class="bs-docs-footer-links text-muted">
+	      <li>Current Version:v1.0.0</li>
+	      <li>·</li>
+	      <li><a href="https://github.com/qman23/pandaWeb/">GitHub</a></li>
+	      <li>·</li>
+	    </ul>
+	  </div>
+	</footer>
 </body>
-<script>
-				//progressUtils.disable();
-	</script>
 </html>

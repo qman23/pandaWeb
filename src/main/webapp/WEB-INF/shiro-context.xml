@@ -38,7 +38,7 @@
 			<value>
 				/login.do=anon
 				/register.do=anon
-				/home/**=user,roles[admin] 
+				/home/**=user,roles[admin],roles[developer]
 			</value>
 		</property>
 	</bean>

@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 
 import org.apache.log4j.Logger;
 
-import com.bussiness.exception.BussinessException;
+import com.bussiness.exception.BusinessException;
 import com.entity.work.Task;
 import com.ibm.healthchecktool.util.SSHUtil;
 import com.task.bussiness.TaskService;
@@ -44,11 +44,13 @@ public class ExecuteEngine extends ExecuteFactory implements Callable<Map>{
 	 * 
 	 * @throws InterruptedException
 	 * @throws ExecutionException
+	 * 
+	 * provide the submit request to action layout .init the fixed thread Pool with the CPU core number.
 	 */
 	public void submitExecuteRequest() throws InterruptedException, ExecutionException{
 			if(tasks!=null&&tasks.size()!=0){
 				log.info("Submit task executer");
-			 	ExecutorService exec = Executors.newFixedThreadPool(tasks.size());
+			 	ExecutorService exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 		        CompletionService<Map> serv =  
 		        new ExecutorCompletionService<Map>(exec);
 		            ExecuteEngine executer=new ExecuteEngine(tasks);
@@ -58,21 +60,24 @@ public class ExecuteEngine extends ExecuteFactory implements Callable<Map>{
 			}
 	}
 
+	/**
+	 * implement the callable interface to execute in the Executorservice.
+	 */
 	public Map call()  {
 		Map result=null;
 		int i=tasks.size();
 		int j=0;
-		for(Task t:tasks){
-				try {
-					result=this.excuteTask(t);
-					j++;
-				} catch (BussinessException e) {
-					log.error("Task execute error--task name:"+t.getTaskName()+",task catalog name:"+t.getCatalogName()+",task parameter:"+t.getTaskParameter()+",Exception details:"+e.getMessage());
-					taskService.addTaskLog(t, e.getMessage(), PandaConstants.TASK_FAILED);
-				} catch (Exception e) {
-					log.error("Task execute error--task name:"+t.getTaskName()+",task catalog name:"+t.getCatalogName()+",task parameter:"+t.getTaskParameter()+",Exception details:"+e.getMessage());
-					taskService.addTaskLog(t, e.getMessage(), PandaConstants.TASK_FAILED);
-				}
+		try {
+			for(Task t:tasks){
+						result=this.excuteTask(t);
+						j++;
+			}
+		} catch (BusinessException e) {
+			log.error("Task execute error--task name:"+tasks.get(j).getTaskName()+",task catalog name:"+tasks.get(j).getCatalogName()+",task parameter:"+tasks.get(j).getTaskParameter()+",Exception details:"+e.getMessage());
+			taskService.addTaskLog(tasks.get(j), e.getMessage(), PandaConstants.TASK_FAILED);
+		} catch (Exception e) {
+			log.error("Task execute error--task name:"+tasks.get(j).getTaskName()+",task catalog name:"+tasks.get(j).getCatalogName()+",task parameter:"+tasks.get(j).getTaskParameter()+",Exception details:"+e.getMessage());
+			taskService.addTaskLog(tasks.get(j), e.getMessage(), PandaConstants.TASK_FAILED);
 		}
 		if(i==j){
 			StringBuffer sb=new StringBuffer();
@@ -81,22 +86,35 @@ public class ExecuteEngine extends ExecuteFactory implements Callable<Map>{
 				sb.append(temp+"\n");
 				sb.append(Utils.getExecuteResult(t, result)+"\n\n");
 			}
-			taskService.addTaskLog(tasks.get(tasks.size()-1), sb.toString(), PandaConstants.TASK_SUCCESS);
+			taskService.addTaskLog(tasks.get(0), sb.toString(), PandaConstants.TASK_SUCCESS);
 		}
+		cleanUp();
+		return result;
+	}
+
+	/**
+	 * clean up relative resource
+	 */
+	private void cleanUp(){
 		SSHUtil sSHUtil=(SSHUtil) SpringUtil.getBean("sSHUtil");
 		try {
 			sSHUtil.disconnect();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return result;
 	}
-
+	
+	/**
+	 * Invoke before every task.
+	 */
 	@Override
 	public void preExecuteTask(Task t,Map context) {
 		log.info("Task Id:"+t.getTaskId()+"--Task Name:"+t.getTaskName()+"--Task begin execute!");
 	}
 
+	/**
+	 * Invoke after every task.
+	 */
 	@Override
 	public void afterExecuteTask(Task t,Map context) {
 		log.info("Task Id:"+t.getTaskId()+"--Task Name:"+t.getTaskName()+"--Running result:"+context);

@@ -5,19 +5,28 @@
 		<id column="USER_ID" property="userid"  />
 		<result column="USER_EMAIL" property="email"/>
 		<result column="USER_PASSWORD" property="password" />
+		<collection property="roles" ofType="com.entity.security.Role" javaType="ArrayList" resultMap="RoleMap"></collection>
 	</resultMap>
-	<sql id='TABLE_NAME'>USER</sql>
+	<resultMap type="com.entity.security.Role" id="RoleMap">
+		<id column="ROLE_ID" property="roleId"  />
+		<result column="ROLE_NAME" property="roleName"/>
+	</resultMap>
+	<sql id='USER_TABLE'>USER</sql>
 	<sql id='defaultSchema'>PANDA</sql>
+	<sql id="ROLE_TABLE">ROLE</sql>
+	<sql id="USER_ROLE_TABLE">USER_ROLE</sql>
 	<select id="findByEmail" parameterType="java.lang.String" resultMap="UserMap">
-		select * from <include refid="defaultSchema" />.<include refid="TABLE_NAME" /> where USER_EMAIL=#{email}
+		select * from <include refid="defaultSchema" />.<include refid="USER_TABLE" /> where USER_EMAIL=#{email}
 	</select>
 	<insert id="insertUser" parameterType="com.entity.security.User">
-		insert into <include refid="defaultSchema" />.<include refid="TABLE_NAME" />(USER_EMAIL,USER_PASSWORD) values(#{email},#{password})
+		insert into <include refid="defaultSchema" />.<include refid="USER_TABLE" />(USER_EMAIL,USER_PASSWORD) values(#{email},#{password})
 	</insert>
 	<update id="updateUser" parameterType="com.entity.security.User">
-		update <include refid="defaultSchema" />.<include refid="TABLE_NAME" /> set USER_PASSWORD=#{password} where USER_EMAIL=#{email}
+		update <include refid="defaultSchema" />.<include refid="USER_TABLE" /> set USER_PASSWORD=#{password} where USER_EMAIL=#{email}
 	</update>
-	<select id="findAllUser" resultMap="UserMap"> 
-		select * from <include refid="defaultSchema" />.<include refid="TABLE_NAME" />
+	<select id="findAllUser" resultMap="UserMap" > 
+		select u.*,r.* from <include refid="defaultSchema" />.<include refid="USER_TABLE" /> u,<include refid="defaultSchema" />.<include refid="ROLE_TABLE" /> r,
+		<include refid="defaultSchema" />.<include refid="USER_ROLE_TABLE" /> urt  where 
+		u.USER_EMAIL=urt.EMAIL and urt.ROLE_ID=r.ROLE_ID
 	</select>
 </mapper>

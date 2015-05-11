@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bussiness.exception.BussinessException;
+import com.bussiness.exception.BusinessException;
 import com.entity.security.User;
 import com.login.bussiness.UserService;
+import com.utils.business.Utils;
 
 @Controller
 public class loginController extends ActionController {
@@ -24,6 +25,7 @@ public class loginController extends ActionController {
 	@RequestMapping(value = "/register.do", method = RequestMethod.POST)
 	public ModelAndView registerActionMethod(User user) {
 		if (userService.findByEmail(user.getEmail()) == null) {
+			user.setPassword(Utils.encrypt(user.getPassword()));
 			userService.insertUser(user);
 			ModelAndView mv = new ModelAndView("redirect:/login.do");
 			mv.addObject("message", "Register Success!");
@@ -39,7 +41,7 @@ public class loginController extends ActionController {
 	public ModelAndView loginActionMethod(User user) {
 		Subject subject = SecurityUtils.getSubject();
 		UsernamePasswordToken token = new UsernamePasswordToken(
-				user.getEmail(), user.getPassword());
+				user.getEmail(), Utils.encrypt(user.getPassword()));
 		token.setRememberMe(user.isRememberMe());
 		try {
 			subject.login(token);
@@ -93,7 +95,7 @@ public class loginController extends ActionController {
 			mv.addObject("message",
 					"Change Password Sucess,Please login!");
 			mv.addObject("messageType","success");
-		} catch (BussinessException e) {
+		} catch (BusinessException e) {
 			mv= new ModelAndView("login/changePwd");
 			mv.addObject("message",
 					e.getMessage());

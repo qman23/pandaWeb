@@ -15,14 +15,28 @@ import com.entity.work.Task;
 
 public class Utils {
 	
+	/**
+	 * 加密算法的种类
+	 */
 	private static final String CIPHER_ALGORITHM = "DES";
 	
+	/**
+	 * 加密所用的密钥
+	 */
 	private static final String key="A1B2C3D4E5F6G7H8";
 	
+	/**
+	 * 获取web 运行系统当前时间
+	 * @return
+	 */
 	public static Timestamp getCurrentTimes() {
 		return new Timestamp(System.currentTimeMillis());
 	}
-
+	/**
+	 * judge if the string is null.
+	 * @param str
+	 * @return
+	 */
 	public static boolean isStringNull(String str) {
 		return str == null || str == "";
 	}

@@ -18,6 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.entity.security.User;
 import com.login.bussiness.UserService;
 
+/**
+ * 
+ * @author Allen
+ * 权限管理 接入口
+ * 
+ */
 public class PandaRealm extends AuthorizingRealm {
 
 	static Logger logger = Logger.getLogger(PandaRealm.class.getName());
@@ -25,6 +31,9 @@ public class PandaRealm extends AuthorizingRealm {
 	@Autowired
 	private UserService userService;
 
+	/**
+	 * 赋予权限，从数据库中查出角色的权限并赋予,shiro框架会去从XML中读取url mapping 和对应的角色并拦截。
+	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principals) {
@@ -33,7 +42,10 @@ public class PandaRealm extends AuthorizingRealm {
 		logger.debug("Begin get user role and permission from database-----------------");
 		SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();
 		if (null != currentUsername) {
-			simpleAuthorInfo.addRole("admin");
+			simpleAuthorInfo.addRole("developer");
+			//we must read the permission role from db 
+			//and config the role scope in the shiro xml.
+			//here is just the simple implements.
 			logger.debug("Begin add user role admin -----------------");
 			//simpleAuthorInfo.addStringPermission("admin:worker");
 		}
@@ -41,6 +53,9 @@ public class PandaRealm extends AuthorizingRealm {
 		return simpleAuthorInfo;
 	}
 
+	/**
+	 *  登陆时候的验证
+	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken authcToken) throws AuthenticationException {
@@ -58,6 +73,11 @@ public class PandaRealm extends AuthorizingRealm {
 		return null;
 	}
 
+	/**
+	 * 放入session中
+	 * @param key
+	 * @param value
+	 */
 	private void setSession(Object key, Object value) {
 		Subject currentUser = SecurityUtils.getSubject();
 		if (null != currentUser) {

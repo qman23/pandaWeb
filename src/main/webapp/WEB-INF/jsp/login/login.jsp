@@ -60,7 +60,7 @@ $(document).ready(function(){
 </script>
 </head>
 
-<body>
+<body style="background: currentcolor;">
 
 	<div class="container">
 		<form class="form-signin" action="<%=basePath%>login.do" method="post">

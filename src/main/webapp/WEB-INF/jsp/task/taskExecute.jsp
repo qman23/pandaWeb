@@ -29,7 +29,11 @@ $("#taskGroupNameSelect").change(
 								});
 })
 function tasklogFormatter(value, row, index){
- return "<textarea style='width:1000px;height:250px;font-size: 12px;color: white;background: black;'>"+value+"</textarea>";
+	if(row.taskStatus==1){
+	 return "<textarea style='width:1000px;height:250px;font-size: 12px;color: white;background: seagreen;'>"+value+"</textarea>";
+ 	}else{
+ 	  return "<textarea style='width:1000px;height:250px;font-size: 12px;color: white;background: grey;'>"+value+"</textarea>";
+ 	}
 }
 function getTasks() {
 		$('#table-javascript').bootstrapTable(
@@ -43,7 +47,7 @@ function getTasks() {
 						};
 					},
 					cache : false,
-					height : 580,
+					height : '100%',
 					striped : true,
 					pagination : true,
 					pageSize : 50,

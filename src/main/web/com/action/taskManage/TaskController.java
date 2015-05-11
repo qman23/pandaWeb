@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.action.controller.ActionController;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.bussiness.exception.BussinessException;
+import com.bussiness.exception.BusinessException;
 import com.entity.work.AccessServerTask;
 import com.entity.work.AccessWebTask;
 import com.entity.work.ScriptTask;
@@ -29,6 +29,11 @@ import com.task.bussiness.TaskService;
 import com.utils.business.PandaConstants;
 import com.utils.business.Utils;
 
+/**
+ * 
+ * @author Allen
+ * Task controller every session will create new instance.
+ */
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
 public class TaskController extends ActionController implements Serializable {
@@ -70,7 +75,7 @@ public class TaskController extends ActionController implements Serializable {
 		return mv;
 	}
 	
-	@RequestMapping(value = "getTask.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/getTask.do", method = RequestMethod.GET)
 	public ModelAndView getTask(int taskId, PrintWriter writer) {
 		ModelAndView mv = new ModelAndView("task/taskModify");
 		mv.addObject("task",taskService.findTaskById(taskId));
@@ -86,7 +91,7 @@ public class TaskController extends ActionController implements Serializable {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/deleteTask.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/home/deleteTask.do", method = RequestMethod.POST)
 	public ModelAndView deleteTask(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("redirect:/home/taskManage.do");
 		TaskTemplate t=new TaskTemplate();
@@ -121,12 +126,17 @@ public class TaskController extends ActionController implements Serializable {
 		mv.addObject("TKcurrentTab", "in");
 		try {
 			taskService.executeTask(groupId);
-		} catch (BussinessException e) {
+		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
 		return mv;
 	}
 	
+	/**
+	 * Convert from request parameter into Task object.
+	 * @param request
+	 * @return
+	 */
 	private Task getTaskFromRequest(HttpServletRequest request) {
 		int catalogId=Integer.parseInt(request
 				.getParameter("taskCatalogId"));

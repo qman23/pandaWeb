@@ -11,7 +11,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -27,21 +26,29 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
+/**
+ * 
+ * @author Allen
+ * Use to connect server and execute command use ThreadLocal to avoid multithreading problem.
+ * 
+ * You can get the instance from sprig utils 
+ */
 @Service("sSHUtil")
 public class SSHUtil {
 
 	private ChannelExec exec;
-	private ChannelShell shell;
-	private Session session;
+	private InheritableThreadLocal<ChannelShell> shell=new InheritableThreadLocal<ChannelShell>();
+	private ThreadLocal<Session> session=new ThreadLocal<Session>();
 	private static final int SESSION_TIMEOUT = 10000;
+	//waiting time out parameter which read from properties file .
 	private static final int CMD_TIMEOUT;
-	private InputStream in;
-	private OutputStream out;
-	private InputStream err;
+	private InheritableThreadLocal<InputStream> in=new InheritableThreadLocal<InputStream>();
+	private ThreadLocal<OutputStream> out=new ThreadLocal<OutputStream>();
+	private ThreadLocal<InputStream> err=new ThreadLocal<InputStream>();
 	private static final String TYPE_EXEC = "exec";
 	private static final String TYPE_SFTP = "sftp";
 	private boolean isTimeout;
-	private Map<Channel,Session> context;
+	private ThreadLocal<Map<Channel,Session>> context;
 
 	static {
 		CMD_TIMEOUT = Integer.parseInt(ConfigProperty
@@ -57,13 +64,13 @@ public class SSHUtil {
 
 	public void connect(String host, int port, String userName, String password)
 			throws Exception {
-		session = getSession(host, port, userName);
-		session.setTimeout(SESSION_TIMEOUT);
-		session.setPassword(password);
+		session.set(getSession(host, port, userName));
+		session.get().setTimeout(SESSION_TIMEOUT);
+		session.get().setPassword(password);
 		Properties config = new Properties();
 		config.setProperty("StrictHostKeyChecking", "no");
-		session.setConfig(config);
-		session.connect();
+		session.get().setConfig(config);
+		session.get().connect();
 	}
 
 	public void connect(ConnBean connBean) throws NumberFormatException,
@@ -76,7 +83,7 @@ public class SSHUtil {
 		if (session == null) {
 			throw new RuntimeException("Not connected");
 		}
-		exec = (ChannelExec) session.openChannel(type);
+		exec = (ChannelExec) session.get().openChannel(type);
 	}
 
 	public String execCmd(String command) throws Exception {
@@ -84,8 +91,8 @@ public class SSHUtil {
 			connectExec(TYPE_EXEC);
 		}
 		exec.setCommand(command);
-		in = exec.getInputStream();
-		err = exec.getErrStream();
+		in.set(exec.getInputStream());
+		err.set(exec.getErrStream());
 		exec.connect();
 
 		isTimeout = true;
@@ -109,37 +116,47 @@ public class SSHUtil {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param cmd
+	 * @return execute result.
+	 * @throws Exception
+	 * 
+	 * execute the cmd and return the result 
+	 * 
+	 * get the exists shell and session instance from context to execute the command for one thread or one executer service.
+	 */
 	public String shell(String cmd) throws Exception {
-		if(shell==null||context==null){
+		if(shell.get()==null||context.get()==null){
 			newSessionShell();
 		}
-		if(!((Session)context.get(shell)).isConnected()){
+		if(!((Session)context.get().get(shell.get())).isConnected()){
 			newSessionShell();
 		}
-		if(!shell.isConnected()){
-			shell.connect();
+		if(!shell.get().isConnected()){
+			shell.get().connect();
 		}
-		if(in==null&out==null){
-			in = shell.getInputStream();
-			out = shell.getOutputStream();
+		if(in.get()==null&out.get()==null){
+			in.set(shell.get().getInputStream());
+			out.set(shell.get().getOutputStream());
 			String shellCommand = cmd+" \n";
-			out.write(shellCommand.getBytes());
-			out.flush();
+			out.get().write(shellCommand.getBytes());
+			out.get().flush();
 			isTimeout = true;
 			waitExecute();
-			return getReturnData(in);
+			return getReturnData(in.get());
 		}else{
 			String shellCommand = cmd+" \n";
-			out.write(shellCommand.getBytes());
-			out.flush();
+			out.get().write(shellCommand.getBytes());
+			out.get().flush();
 			isTimeout = true;
 			waitExecute();
-			return getReturnData(in);
+			return getReturnData(in.get());
 		}
 	}
 
 	public String getReturnMessage() throws Exception {
-		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+		BufferedReader br = new BufferedReader(new InputStreamReader(in.get()));
 		String line = "";
 		StringBuffer buffer = new StringBuffer();
 		while ((line = br.readLine()) != null) {
@@ -150,44 +167,60 @@ public class SSHUtil {
 		return buffer.toString();
 	}
 
+	/**
+	 *  
+	 * @param in
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 * @throws IOException
+	 * 
+	 * return the read message from input byte Stream .
+	 */
 	private String getReturnData(InputStream in) throws UnsupportedEncodingException, IOException{
 		StringBuffer sb=new StringBuffer();
-		while(in.available() > 0){
-			byte[] data = new byte[256];
+		while(in.available()>0){
+			byte[] data = new byte[1024];
 			int nLen = in.read(data);
 			sb.append(new String(data, 0,  nLen));
 		}
-		//System.out.println(sb.toString());
 		return sb.toString();
+		//System.out.println(sb.toString());
 	}
 	
+	/**
+	 * 
+	 * @throws JSchException
+	 * init new shell and put the shell and session into context map.
+	 */
 	private void newSessionShell() throws JSchException{
-		shell = (ChannelShell) session.openChannel("shell");
-		context=new HashMap<Channel,Session>();
-		context.put(shell, session);
+		shell.set( (ChannelShell) session.get().openChannel("shell"));
+		context=new ThreadLocal<Map<Channel,Session>>();
+		context.set(new HashMap<Channel,Session>());
+		context.get().put(shell.get(), session.get());
 	}
 	
 	private void waitExecute() throws InterruptedException{
 		Thread thread = new Thread() {
 			public void run() {
-				while (!shell.isClosed()) {
-					try {
+				try {
+					while (true) {
 						sleep(100);
-					} catch (Exception e) {
-						// ignored
 					}
+				} catch (Exception e) {
+					// ignored
 				}
 				isTimeout = false;
+				System.out.println(System.currentTimeMillis()+"sleep complate.");
 			}
 		};
-
+		System.out.println(System.currentTimeMillis()+"sleep begin.");
 		thread.start();
 		thread.join(CMD_TIMEOUT);
 	}
 	
 	
 	public String getErrorMessage() throws Exception {
-		BufferedReader br = new BufferedReader(new InputStreamReader(err));
+		BufferedReader br = new BufferedReader(new InputStreamReader(err.get()));
 		String line = "";
 		StringBuffer buffer = new StringBuffer();
 		while ((line = br.readLine()) != null) {
@@ -199,35 +232,35 @@ public class SSHUtil {
 	}
 
 	public void disconnect() throws IOException {
-		if (session != null && session.isConnected()) {
-			session.disconnect();
+		if (session.get() != null && session.get().isConnected()) {
+			session.get().disconnect();
 			if (exec != null && exec.isConnected()) {
 				exec.disconnect();
 			}
-			if (shell != null && shell.isConnected()) {
-				shell.disconnect();
+			if (shell.get()!= null && shell.get().isConnected()) {
+				shell.get().disconnect();
 			}
 		}
-		if(in!=null){
-			in.close();
-			in=null;
-		}if(out!=null){
-			out.close();
-			out=null;
+		if(in.get()!=null){
+			in.get().close();
+			in.set(null);
+		}if(out.get()!=null){
+			out.get().close();
+			out.set(null);
 		}
-		if( err!=null){
-			err.close();
-			out=null;
+		if( err.get()!=null){
+			err.get().close();
+			out.set(null);
 		}
 	}
 	
 	public void destorySession(){
-		if(session!=null){
-			session=null;
+		if(session.get()!=null){
+			session.set(null);
 		}
 	}
 
 	public boolean isConnected() {
-		return session.isConnected();
+		return session.get().isConnected();
 	}
 }

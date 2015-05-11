@@ -3,7 +3,7 @@ package com.work.bussiness;
 import java.util.Hashtable;
 import java.util.Map;
 
-import com.bussiness.exception.BussinessException;
+import com.bussiness.exception.BusinessException;
 import com.entity.work.Task;
 import com.utils.business.PandaConstants;
 
@@ -11,11 +11,14 @@ import com.utils.business.PandaConstants;
  * Task executeFactory
  * @author Allen
  *
+ * provide get executer and execute one task function.
  */
 public abstract class ExecuteFactory {
 	
 	/**
-	 * task chian execute context;
+	 * Task chain execute context;
+	 * 
+	 * can use Threadlocal to improve.
 	 */
 	private Hashtable context=new Hashtable<String,String>();
 	
@@ -63,7 +66,7 @@ public abstract class ExecuteFactory {
 	 * @param tasks
 	 * @throws BussinessException 
 	 */
-	public Map excuteTask(Task task) throws BussinessException{
+	public Map excuteTask(Task task) throws BusinessException{
 		preExecuteTask(task,context);
 		Map result=getTaskExecuter(task.getCatalogId()).execute(task, context);
 		afterExecuteTask(task,context);

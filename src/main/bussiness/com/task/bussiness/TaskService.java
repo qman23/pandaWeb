@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import com.bussiness.exception.BussinessException;
+import com.bussiness.exception.BusinessException;
 import com.entity.work.Task;
 import com.entity.work.TaskLog;
 import com.task.dao.TaskDao;
@@ -95,14 +95,14 @@ public class TaskService {
 		return taskLogDao.findTaskLogsByGroupId(groupId);
 	}
 	
-	public void executeTask(int groupId) throws BussinessException{
+	public void executeTask(int groupId) throws BusinessException{
 		ExecuteEngine executeEngine=new ExecuteEngine(findTasksByGroupId(groupId));
 		try {
 			executeEngine.submitExecuteRequest();
 		} catch (InterruptedException e) {
-			throw new BussinessException("Task execute error");
+			throw new BusinessException("Task execute error:"+e.getMessage());
 		} catch (ExecutionException e) {
-			throw new BussinessException("Task execute error");
+			throw new BusinessException("Task execute error"+e.getMessage());
 		}
 	}
 	

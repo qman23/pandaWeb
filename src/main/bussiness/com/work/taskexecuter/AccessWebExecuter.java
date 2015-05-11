@@ -13,16 +13,29 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.bussiness.exception.BussinessException;
+import com.bussiness.exception.BusinessException;
 import com.entity.work.Task;
 import com.utils.business.PandaConstants;
 import com.utils.business.Utils;
 import com.work.bussiness.Executer;
 
+/**
+ * 
+ * @author Allen
+ *
+ *	provide access web function by the URL and UserName Password.
+ *
+ *	if there is no user name or password just access the Url directly.
+ *
+ *	Put the view result into context map .
+ */
 public class AccessWebExecuter implements Executer{
 	private static Logger log=Logger.getLogger(AccessWebExecuter.class.getName());
 	
-	public Map execute(Task t, Map context) throws BussinessException {
+	/**
+	 * implement the interface executer access the URL and put the return HTML code into result map.
+	 */
+	public Map execute(Task t, Map context) throws BusinessException {
 		String url= String.valueOf(t.getData().get("Url"));
 		String userName= String.valueOf(t.getData().get("UserName"));
 		String passWord= Utils.decrypt(String.valueOf(t.getData().get("Password")));
@@ -34,12 +47,18 @@ public class AccessWebExecuter implements Executer{
 			context.put(t.getTaskId(), PandaConstants.TASK_SUCCESS);
 		} catch (IOException e) {
 			context.put(t.getTaskId(), PandaConstants.TASK_FAILED);
-			throw new BussinessException(e);
+			throw new BusinessException(e);
 		}
 		log.info(("User Id:"+t.getUserId()+"--Task Id:"+t.getTaskId()+"--Name:"+t.getTaskName()+"--Task Parameter:"+t.getTaskParameter()+"--Running Complete!"));
 		return context;
 	}
 	
+	/**
+	 * 
+	 * @author Allen
+	 *	
+	 * New access entity extends from authenticator.
+	 */
 	static class MyAuthenticator extends Authenticator {
 		private static String kuser = ""; 
 		private static String kpass = "";
@@ -53,7 +72,17 @@ public class AccessWebExecuter implements Executer{
 		}
 	}
 	
-	public static String getContentByUrl(String webUrl,String userName,String passWord) throws IOException {
+	/**
+	 * 
+	 * @param webUrl
+	 * @param userName
+	 * @param passWord
+	 * @return
+	 * @throws IOException
+	 * 
+	 *  get the context by the URL( if the username and password is exist then use them ).
+	 */
+	private static String getContentByUrl(String webUrl,String userName,String passWord) throws IOException {
 		URL url = null;
 		HttpURLConnection conn = null;
 		BufferedReader bf = null;
