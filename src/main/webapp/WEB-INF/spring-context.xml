@@ -38,6 +38,7 @@
 	<context:component-scan base-package="com.login.*" />
 	<context:component-scan base-package="com.task.*" />
 	<context:component-scan base-package="com.user.*" />
+	<context:component-scan base-package="com.role.*" />
 	<context:component-scan base-package="com.entity" />
 	<context:component-scan base-package="com.shiro.*" />
 	<context:component-scan base-package="com.work.*" />

@@ -15,6 +15,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.entity.security.Role;
 import com.entity.security.User;
 import com.login.bussiness.UserService;
 
@@ -42,7 +43,11 @@ public class PandaRealm extends AuthorizingRealm {
 		logger.debug("Begin get user role and permission from database-----------------");
 		SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();
 		if (null != currentUsername) {
-			simpleAuthorInfo.addRole("developer");
+			User u=new User();
+			u.setEmail(currentUsername);
+			for(Role role:userService.findRolesByUser(u)){
+				simpleAuthorInfo.addRole(role.getRoleName());
+			}
 			//we must read the permission role from db 
 			//and config the role scope in the shiro xml.
 			//here is just the simple implements.

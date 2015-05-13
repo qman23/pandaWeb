@@ -12,48 +12,19 @@
 %>
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="<%=basePath%>style/css/bootstrap.min.css">
+<link href="<%=basePath%>style/css/bootstrap-responsive.min.css" rel="stylesheet" />
+ 
 <script src="<%=basePath%>style/js/jquery-1.11.2.min.js"></script>
 <script src="<%=basePath%>style/js/bootstrap.min.js"></script>
-<link rel="shortcut icon" type="image/x-icon"
-	href="<%=basePath%>style/img/ruyo_net_w_32.png" media="screen" />
-<style type="text/css">
-body {
-	padding-top: 40px;
-	padding-bottom: 40px;
-	background-color: #f5f5f5;
-}
 
-.form-signin {
-	max-width: 300px;
-	padding: 19px 29px 29px;
-	margin: 0 auto 20px;
-	background-color: #fff;
-	border: 1px solid #e5e5e5;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-	box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-}
+<link href="<%=basePath%>style/css/font-awesome.css" rel="stylesheet" />    
+<link href="<%=basePath%>style/css/adminia.css" rel="stylesheet" /> 
+<link href="<%=basePath%>style/css/adminia-responsive.css" rel="stylesheet" /> 
+<link href="<%=basePath%>style/css/pages/login.css" rel="stylesheet" /> 
 
-.form-signin .form-signin-heading, .form-signin .checkbox {
-	margin-bottom: 10px;
-}
-
-.form-signin input[type="text"], .form-signin input[type="password"] {
-	font-size: 16px;
-	margin-top: 10px;
-	height: auto;
-	margin-bottom: 15px;
-	padding: 7px 9px;
-}
-</style>
+<link rel="shortcut icon" type="image/x-icon" href="<%=basePath%>style/img/ruyo_net_w_32.png" media="screen" /> 
 <script>
 $(document).ready(function(){
-	$("#cancel").click(function(){
-		window.location.href="<%=basePath%>login.do";
-		});
 	$('#confirmNewPassword').blur(function(){
 		$('#messageDiv').html('');
 		if($('input[id=confirmNewPassword]').val()!=$('input[id=newPassword]').val()){
@@ -65,33 +36,71 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-
-	<div class="container">
-		<form class="form-signin" action="<%=basePath%>changePwd.do"
-			method="post">
-			<h2 class="form-signin-heading">Please fill in</h2>
-			<label for="inputEmail" class="sr-only">Email address</label> <input
-				type="email" id="email" name="email" class="form-control"
-				placeholder="Email address" required autofocus> <label
-				for="inputPassword" class="sr-only">Current Password</label> <input
-				type="password" id="password" name="currentPassword" class="form-control"
-				placeholder="Password" required> <label for="inputPassword"
-				class="sr-only">New Password</label> <input type="password"
-				id="newPassword" class="form-control" name="newPassword"
-				placeholder="New Password" required> <label
-				for="inputPassword" class="sr-only">Confirm New Password</label> <input
-				type="password" id="confirmNewPassword" class="form-control"
-				placeholder="Confirm new Password" required>
-				
-			<button class="btn btn-lg btn-primary btn-block" id="submit"
-				type="submit">Submit</button>
-			<button class="btn btn-lg btn-primary btn-block" id="cancel"
-				type="button">Cancel</button>
-
+<div class="navbar navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
+				<span class="icon-bar"></span> 
+				<span class="icon-bar"></span> 
+				<span class="icon-bar"></span> 				
+			</a>	
+			<div class="nav-collapse">
+				<ul class="nav pull-right">	
+					<li class="">			
+					</li>
+				</ul>
+			</div> <!-- /nav-collapse -->
+		</div> <!-- /container -->
+	</div> <!-- /navbar-inner -->
+</div> <!-- /navbar -->
+<div id="login-container">
+	<div id="login-header">
+		
+		<h3>Please fill in</h3>
+		
+	</div> <!-- /login-header -->
+	
+	<div id="login-content" class="clearfix">
+	
+	<form action="<%=basePath%>changePwd.do" method="post">
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="username">Email address</label>
+						<div class="controls">
+							<input type="email" class="" id="email" name="email" placeholder="Email" required autofocus/>
+						</div>
+					</div>
+		
+					<div class="control-group">
+						<label for="password" class="control-label">Current Password</label> 
+						<input type="password" id="password" name="currentPassword"  placeholder="Password" required/>
+					</div>
+					
+					<div class="control-group">
+						<label for="inputPassword" class="control-label">New Password</label>
+					    <input type="password" id="newPassword" name="newPassword" placeholder="New Password" required>
+				    </div>
+				    
+					<div class="control-group">
+						<label class="control-label" for="password">Confirm Password</label>
+						 <div class="controls">
+						  <input type="password"  placeholder="Confirm new Password" id="confirmNewPassword" required/>
+						  </div>
+					</div>
+					
+				<div class="pull-right" style="padding-top:10px">
+					<button type="submit" class="btn btn-warning btn-large">
+						Register
+					</button>
+				</div>
+				</fieldset>
 		</form>
-		<div class="row">
-			<div class="col-md-4"></div>
-			<div class="col-md-4" id="messageDiv">
+		</div> <!-- /login-content -->
+		<div id="login-extra">
+			<p>Do you want to login in? <a href="<%=basePath%>login.do">Login in.</a></p>
+			<p>Create a new user?<a href="<%=basePath%>register.do">Register.</a></p>
+		</div> <!-- /login-extra -->
+			<div  id="messageDiv">
 				<c:if test="${not empty message  }">
 					<div class="alert alert-${messageType}" role="alert">
 						<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
@@ -99,7 +108,6 @@ $(document).ready(function(){
 					</div>
 				</c:if>
 			</div>
-		</div>
-	</div>
+</div> <!-- /login-wrapper -->
 </body>
 </html>

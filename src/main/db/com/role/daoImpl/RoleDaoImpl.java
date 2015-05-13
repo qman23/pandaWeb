@@ -1,4 +1,4 @@
-package com.task.daoImpl;
+package com.role.daoImpl;
 
 import java.util.List;
 
@@ -7,32 +7,33 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.entity.work.TaskLog;
-import com.task.dao.TaskLogDao;
+import com.entity.security.Role;
+import com.entity.security.UserRole;
+import com.role.dao.RoleDao;
 
 @Repository
-public class TaskLogDaoImpl implements TaskLogDao{
+public class RoleDaoImpl implements RoleDao{
 
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 	
-	public void addTaskLog(TaskLog tl) {
+	public List<Role> getRoleListByEmail(String email) {
 		SqlSession session=sqlSessionFactory.openSession();
-		session.insert("Task.addTaskLog", tl);
+		return session.selectList("getRoleListByEmail", email);
 	}
 
-	public List<TaskLog> findTaskLogsByGroupId(int groupId) {
+	public void updateUserRole(UserRole ur) {
 		SqlSession session=sqlSessionFactory.openSession();
-		return session.selectList("Task.findTaskLogsByGroupId",groupId);
+		session.update("updateUserRole", ur);
 	}
 
-	public void deleteTaskLog(TaskLog tl) {
+	public void insertUserRole(UserRole ur) {
 		SqlSession session=sqlSessionFactory.openSession();
-		session.delete("Task.deleteTaskLog", tl);
+		session.insert("insertUserRole", ur);
 	}
 
-	public void deleteTaskLogsByGroupId(int groupId) {
+	public void deleteUserRole(UserRole ur){
 		SqlSession session=sqlSessionFactory.openSession();
-		session.delete("Task.deleteTaskLogsByGroupId", groupId);
+		session.delete("deleteUserRole", ur);
 	}
 }

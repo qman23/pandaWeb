@@ -10,7 +10,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.entity.security.Role;
+import com.entity.security.User;
 import com.login.bussiness.UserService;
+import com.utils.business.Utils;
 
 @Controller
 public class UserController {
@@ -32,5 +35,33 @@ public class UserController {
 				SerializerFeature.PrettyFormat));
 		writer.flush();
 		writer.close();
+	}
+	
+	@RequestMapping(value = "/home/deleteUser.do", method = RequestMethod.GET)
+	public ModelAndView deleteUser(int userId){
+		ModelAndView mv = new ModelAndView("redirect:/home/userManage.do");
+		User u=new User();
+		u.setUserid(userId);
+		userService.deleteUserWithTasks(u);
+		return mv;
+	}
+	
+	@RequestMapping(value = "/home/updateUser.do", method = RequestMethod.POST)
+	public ModelAndView updateUser(User u){
+		ModelAndView mv = new ModelAndView("redirect:/home/userManage.do");
+		u.setPassword(Utils.encrypt(u.getPassword()));
+		userService.updateUser(u);
+		return mv;
+	}
+	
+	@RequestMapping(value = "/home/updateUserRole.do", method = RequestMethod.POST)
+	public ModelAndView updateUserRole(String email,int roleId){
+		ModelAndView mv = new ModelAndView("redirect:/home/userManage.do");
+		User u=new User();
+		u.setEmail(email);
+		Role role=new Role();
+		role.setRoleId(roleId);
+		userService.insertOrUpdateUserRole(u, role);
+		return mv;
 	}
 }

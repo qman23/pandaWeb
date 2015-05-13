@@ -20,6 +20,11 @@
 		</insert>
 		
 		<delete id="deleteTaskLogsByGroupId" parameterType="int" >
-		delete from <include refid="defaultSchema" />.<include refid="TASK_LOG" /> TL where TL.GROUP_ID=#{groupId})
+		delete from <include refid="defaultSchema" />.<include refid="TASK_LOG" /> TL where TL.GROUP_ID=#{groupId}
 		</delete>
+		
+		<delete id="deleteTaskLog" parameterType="com.entity.work.TaskLog" >
+		delete from <include refid="defaultSchema" />.<include refid="TASK_LOG" /> TL where TL.LOG_ID=#{logId}
+		</delete>
+		
 </mapper>

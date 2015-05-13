@@ -34,4 +34,11 @@ public final class PandaConstants {
 	 */
 	public static final int TASK_SUCCESS=1;
 	public static final int TASK_FAILED=0;
+	
+	/**
+	 * User role constants
+	 */
+	public static final int ROLE_ADMIN=0;
+	public static final int ROLE_DEVELOPER=1;
+	public static final int ROLE_USER=2;
 }

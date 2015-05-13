@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.role.dao.RoleDao">
+	<resultMap type="com.entity.security.Role" id="RoleMap">
+		<id column="ROLE_ID" property="roleId"  />
+		<result column="ROLE_NAME" property="roleName"/>
+	</resultMap>
+	<sql id='defaultSchema'>PANDA</sql>
+	<sql id="ROLE_TABLE">ROLE</sql>
+	<sql id="USER_ROLE_TABLE">USER_ROLE</sql>
+	<select id="getRoleListByEmail" resultMap="RoleMap" parameterType="java.lang.String">
+		select r.* from <include refid="defaultSchema" />.<include refid="ROLE_TABLE" /> r, <include refid="defaultSchema" />.<include refid="USER_ROLE_TABLE" /> urt 
+		where r.ROLE_ID=urt.ROLE_ID and urt.EMAIL=#{email}
+	</select>
+	<update id="updateUserRole" parameterType="com.entity.security.UserRole">
+		update <include refid="defaultSchema" />.<include refid="USER_ROLE_TABLE" /> urt set urt.ROLE_ID=#{roleId} where urt.EMAIL=#{email}
+	</update>
+	<insert id="insertUserRole" parameterType="com.entity.security.UserRole">
+		insert into <include refid="defaultSchema" />.<include refid="USER_ROLE_TABLE" /> (EMAIL,ROLE_ID) values(#{email},#{roleId})
+	</insert>
+	<delete id="deleteUserRole" parameterType="com.entity.security.UserRole">
+		delete from <include refid="defaultSchema" />.<include refid="USER_ROLE_TABLE" /> where EMAIL=#{email}
+	</delete>
+</mapper>

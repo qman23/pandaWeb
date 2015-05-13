@@ -8,5 +8,6 @@ public interface UserDao {
     public User findByEmail(String email);  
     public void insertUser(User user); 
     public void updateUser(User user);
+    public void deleteUser(User user);
     public List<User> findAllUser();
 }  

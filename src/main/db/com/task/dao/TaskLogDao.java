@@ -10,4 +10,7 @@ public interface TaskLogDao {
 	
 	public List<TaskLog> findTaskLogsByGroupId(int groupId);
 	
+	public void deleteTaskLog(TaskLog tl);
+	
+	public void deleteTaskLogsByGroupId(int groupId);
 }

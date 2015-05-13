@@ -71,6 +71,7 @@ public class TaskService {
 		taskDao.deleteGroupTask(t);
 		taskDao.deleteTask(t);
 		taskDao.deleteTaskParameter(t);
+		
 	}
 	
 	public void addTaskLog(TaskLog tl){
@@ -95,6 +96,9 @@ public class TaskService {
 		return taskLogDao.findTaskLogsByGroupId(groupId);
 	}
 	
+	public void deleteTaskLogByGroupId(int groupId){
+		taskLogDao.deleteTaskLogsByGroupId(groupId);
+	}
 	public void executeTask(int groupId) throws BusinessException{
 		ExecuteEngine executeEngine=new ExecuteEngine(findTasksByGroupId(groupId));
 		try {

@@ -38,4 +38,9 @@ public class homeController extends ActionController {
 	public String aboutUs(Model model) {
 		return "aboutUs";
 	}
+	
+	@RequestMapping("/home/noPermission.do")
+	public String noPermission(Model model) {
+		return "noPermission";
+	}
 }

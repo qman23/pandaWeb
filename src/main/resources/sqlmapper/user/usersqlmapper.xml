@@ -29,4 +29,7 @@
 		<include refid="defaultSchema" />.<include refid="USER_ROLE_TABLE" /> urt  where 
 		u.USER_EMAIL=urt.EMAIL and urt.ROLE_ID=r.ROLE_ID
 	</select>
+	<delete id="deleteUser" parameterType="com.entity.security.User">
+	delete from <include refid="defaultSchema" />.<include refid="USER_TABLE" /> u where u.USER_ID=#{userid}
+	</delete>
 </mapper>

@@ -99,7 +99,13 @@ CREATE TABLE "PANDA"."ROLE_PERMISSION"  (
 		  "ROLE_ID" INTEGER NOT NULL , 
 		  "PERMISSION_ID" INTEGER NOT NULL )   
 		 IN "PANDASPACE" ; 
-    
+		 
+insert into PANDA.ROLE(ROLE_NAME) values('admin');
+insert into PANDA.ROLE(ROLE_NAME) values('developer');
+insert into PANDA.ROLE(ROLE_NAME) values('user');
+insert into PANDA.USER(USER_EMAIL,USER_PASSWORD) values('root','root');
+insert into PANDA.USER_ROLE(EMAIL,ROLE_ID) values('root','0');
+
 COMMIT WORK;
 CONNECT RESET;
 TERMINATE;

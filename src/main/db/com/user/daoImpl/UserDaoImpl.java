@@ -35,5 +35,10 @@ public class UserDaoImpl implements UserDao{
 		SqlSession session=sqlSessionFactory.openSession();
 		return session.selectList("userDao.findAllUser", null);
 	}
+
+	public void deleteUser(User user) {
+		SqlSession session=sqlSessionFactory.openSession();
+		 session.delete("userDao.deleteUser", user);
+	}
 	
 }

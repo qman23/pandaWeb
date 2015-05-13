@@ -100,7 +100,7 @@ public class TaskController extends ActionController implements Serializable {
 		return mv;
 	}
 
-	@RequestMapping(value = "/home/executeTask.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/home/taskExecute.do", method = RequestMethod.GET)
 	public ModelAndView initexecuteTask(){
 		ModelAndView mv = new ModelAndView("task/taskExecute");
 		int userId = (Integer) getSeesionValue("CurrentUserId");
@@ -121,7 +121,7 @@ public class TaskController extends ActionController implements Serializable {
 	
 	@RequestMapping(value = "/home/executeTaskBygroupId.do", method = RequestMethod.GET)
 	public ModelAndView executeTask(int groupId){
-		ModelAndView mv = new ModelAndView("redirect:/home/executeTask.do");
+		ModelAndView mv = new ModelAndView("redirect:/home/taskExecute.do");
 		mv.addObject("taskRunClass", "active");
 		mv.addObject("TKcurrentTab", "in");
 		try {
@@ -129,6 +129,14 @@ public class TaskController extends ActionController implements Serializable {
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
+		return mv;
+	}
+	
+	@RequestMapping(value = "/home/taskReports.do", method = RequestMethod.GET)
+	public ModelAndView getTaskReport(){
+		ModelAndView mv = new ModelAndView("task/taskReport");
+		mv.addObject("taskReportClass", "active");
+		mv.addObject("TKcurrentTab", "in");
 		return mv;
 	}
 	

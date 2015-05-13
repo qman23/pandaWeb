@@ -229,7 +229,7 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 <decorator:head/>
 </head>
 
-<body>
+<body style="background: url(../style/img/body-bg.png) repeat 0 0">
 	<input type="hidden" id="progress_1" value="25%">
 
 	<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -247,16 +247,17 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 
-				<form class="navbar-form navbar-left" role="search">
+				<!--<form class="navbar-form navbar-left" role="search">
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="Search">
 					</div>
 					<button type="submit" class="btn btn-default">Go</button>
 				</form>
+				-->
 				<ul class="nav navbar-nav  navbar-right">
 					<li class="active"><a href="index.do">Dashboard <span
 							class="sr-only">(current)</span></a></li>
-					<li><a href="#">help</a></li>
+					<li><a href="mailto:wuwangjun123@163.com">help</a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-expanded="false">${CurrentUser}
 							<span class="caret"></span>
@@ -293,7 +294,6 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 					</a>
 						<ul id="systemSetting" class="nav nav-list secondmenu collapse ${SMcurrentTab}">
 							<li class="${userManageClass}"><a  href="userManage.do"><i class="glyphicon glyphicon-user"></i>&nbsp;User Manage</a></li>
-							<li><a href="#"><i class="glyphicon glyphicon-asterisk"></i>&nbsp;Role Manage</a></li>
 						</ul></li>
 					<li><a href="#disSetting" class="nav-header collapsed"
 						data-toggle="collapse"> <i class="glyphicon glyphicon-globe"></i>
@@ -302,8 +302,8 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 						<ul id="disSetting" class="nav nav-list secondmenu collapse ${TKcurrentTab}">
 							<li class="${taskGroupClass}"><a href="taskGroupManage.do" ><i class="glyphicon glyphicon-th-list"></i>&nbsp;Task Group Manage</a></li>
 							<li class="${taskClass}"><a href="taskManage.do"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Task Manage</a></li>
-							<li class="${taskRunClass}"><a href="executeTask.do"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Run Task</a></li>
-							<li class="${taskReportClass}"><a href="taskManage.do"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Task Report</a></li>
+							<li class="${taskRunClass}"><a href="taskExecute.do"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Run Task</a></li>
+							<li class="${taskReportClass}"><a href="taskReports.do"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Task Report</a></li>
 						</ul>
 					</li>
 					<li><a href="#dicSetting" class="nav-header collapsed"
@@ -336,7 +336,7 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 
 	<footer class="bs-docs-footer" >
 	  <div class="container">
-	    <p>Designed and built with all the love in the world by <a href="mailto:wuwangjun123@163.com" target="_blank">@Allen</a> and <a href="mailto:lizhiwcd@cn.ibm.com" target="_blank">@Lee</a>.</p>
+	    <p>Designed and built with all the love in the world by <a href="mailto:wuwangjun123@163.com" >@Allen</a> and <a href="mailto:lizhiwcd@cn.ibm.com">@Lee</a>.</p>
 	    <p>Maintained by the <a href="https://github.com/qman23/pandaWeb/">core team</a> with the help of <a href="https://github.com/qman23/pandaWeb/graphs/contributors">our contributors</a>.</p>
 	    <ul class="bs-docs-footer-links text-muted">
 	      <li>Current Version:v1.0.0</li>
