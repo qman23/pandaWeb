@@ -44,7 +44,7 @@
 		insert into <include refid="defaultSchema" />.<include refid="TASK" /> (TASK_NAME,CATALOG_ID,CREATE_DATE,LAST_MODIFY,COMMENTS) VALUES (#{taskName},#{catalogId},#{createDate},CURRENT TIMESTAMP,#{comments})
 	</insert>
 	<insert id="insertTaskParameter" parameterType="com.entity.work.Task">
-		insert into <include refid="defaultSchema" />.<include refid="TASK_PARAMETER" /> (TASK_ID,TASK_PARAMETER) VALUES(#{taskId},xmlparse(document #{taskParameter} preserve whitespace))
+		insert into <include refid="defaultSchema" />.<include refid="TASK_PARAMETER" /> (TASK_ID,TASK_PARAMETER) VALUES(#{taskId},#{taskParameter})
 	</insert>
 	
 	<update id="updateGroupTask" parameterType="com.entity.work.Task">
@@ -56,7 +56,7 @@
 	</update>
 	
 	<update id="updateTaskParameter" parameterType="com.entity.work.Task">
-		update <include refid="defaultSchema" />.<include refid="TASK_PARAMETER" /> set TASK_PARAMETER=xmlparse(document #{taskParameter} preserve whitespace) where TASK_ID=#{taskId}
+		update <include refid="defaultSchema" />.<include refid="TASK_PARAMETER" /> set TASK_PARAMETER=#{taskParameter} where TASK_ID=#{taskId}
 	</update>
 	
 	<delete id="deleteGroupTask" parameterType="com.entity.work.Task">delete from <include refid="defaultSchema" />.<include refid="GROUP_TASK" /> where TASK_ID=#{taskId}</delete>

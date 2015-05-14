@@ -5,8 +5,7 @@
 -- Database Codepage: 1208
 -- Database Collating Sequence is: IDENTITY
 CONNECT TO PANDA;
-CREATE REGULAR TABLESPACE PANDASPACE PAGESIZE 4 K MANAGED BY AUTOMATIC STORAGE EXTENTSIZE 16
-OVERHEAD 10.5 PREFETCHSIZE 16 TRANSFERRATE 0.14 BUFFERPOOL IBMDEFAULTBP DROPPED TABLE RECOVERY ON;
+CREATE REGULAR TABLESPACE PANDASPACE ;
 
 create schema PANDA
 ------------------------------------------------
@@ -103,8 +102,10 @@ CREATE TABLE "PANDA"."ROLE_PERMISSION"  (
 insert into PANDA.ROLE(ROLE_NAME) values('admin');
 insert into PANDA.ROLE(ROLE_NAME) values('developer');
 insert into PANDA.ROLE(ROLE_NAME) values('user');
-insert into PANDA.USER(USER_EMAIL,USER_PASSWORD) values('root','root');
-insert into PANDA.USER_ROLE(EMAIL,ROLE_ID) values('root','0');
+-------------------------init user password is 123456------------------------
+insert into PANDA.USER(USER_EMAIL,USER_PASSWORD) values('root@cn.ibm.com','3iXD9gshdik=');
+-----------------------------------------------------------------------------
+insert into PANDA.USER_ROLE(EMAIL,ROLE_ID) values('root@cn.ibm.com','0');
 
 COMMIT WORK;
 CONNECT RESET;
