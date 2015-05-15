@@ -99,6 +99,17 @@ public class TaskService {
 	public void deleteTaskLogByGroupId(int groupId){
 		taskLogDao.deleteTaskLogsByGroupId(groupId);
 	}
+	
+	public void deleteTaskLogByLogId(int logId){
+		TaskLog t=new TaskLog();
+		t.setLogId(logId);
+		taskLogDao.deleteTaskLog(t);
+	}
+	
+	public TaskLog findTaskLogByLogId(int logId){
+		return taskLogDao.findTaskLogByLogId(logId);
+	}
+	
 	public void executeTask(int groupId) throws BusinessException{
 		ExecuteEngine executeEngine=new ExecuteEngine(findTasksByGroupId(groupId));
 		try {

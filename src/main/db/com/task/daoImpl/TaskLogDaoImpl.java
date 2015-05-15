@@ -35,4 +35,9 @@ public class TaskLogDaoImpl implements TaskLogDao{
 		SqlSession session=sqlSessionFactory.openSession();
 		session.delete("Task.deleteTaskLogsByGroupId", groupId);
 	}
+
+	public TaskLog findTaskLogByLogId(int logId) {
+		SqlSession session=sqlSessionFactory.openSession();
+		return session.selectOne("Task.findTaskLogByLogId",logId);
+	}
 }

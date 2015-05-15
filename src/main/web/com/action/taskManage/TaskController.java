@@ -132,6 +132,15 @@ public class TaskController extends ActionController implements Serializable {
 		return mv;
 	}
 	
+	@RequestMapping(value = "/home/deleteTaskLog.do", method = RequestMethod.GET)
+	public ModelAndView deleteTaskLog(int logId){
+		ModelAndView mv = new ModelAndView("redirect:/home/taskExecute.do");
+		mv.addObject("taskRunClass", "active");
+		mv.addObject("TKcurrentTab", "in");
+		taskService.deleteTaskLogByLogId(logId);
+		return mv;
+	}
+	
 	@RequestMapping(value = "/home/taskReports.do", method = RequestMethod.GET)
 	public ModelAndView getTaskReport(){
 		ModelAndView mv = new ModelAndView("task/taskReport");
@@ -140,6 +149,10 @@ public class TaskController extends ActionController implements Serializable {
 		return mv;
 	}
 	
+	@RequestMapping(value = "/getTaskLog.do", method = RequestMethod.GET)
+	public void getTaskLog(int logId,PrintWriter writer){
+		writer.write(taskService.findTaskLogByLogId(logId).getTaskLog());
+	}
 	/**
 	 * Convert from request parameter into Task object.
 	 * @param request

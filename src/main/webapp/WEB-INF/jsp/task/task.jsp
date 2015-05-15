@@ -359,7 +359,7 @@
 					<h4 class="modal-title" id="myModalLabel">Change Task Details</h4>
 				</div>
 				<div class="modal-body" style="height: 700px">
-					
+					<img alt="Loading" src="../style/img/loading.gif">
 				</div>
 			</div>
 		</div>

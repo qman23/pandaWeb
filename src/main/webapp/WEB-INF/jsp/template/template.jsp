@@ -340,9 +340,9 @@ footer.duomi-page-footer .list-inline a, footer.authenticated-footer .list-inlin
 	    <p>Maintained by the <a href="https://github.com/qman23/pandaWeb/">core team</a> with the help of <a href="https://github.com/qman23/pandaWeb/graphs/contributors">our contributors</a>.</p>
 	    <ul class="bs-docs-footer-links text-muted">
 	      <li>Current Version:v1.0.0</li>
-	      <li>·</li>
+	      <li>.</li>
 	      <li><a href="https://github.com/qman23/pandaWeb/">GitHub</a></li>
-	      <li>·</li>
+	      <li>.</li>
 	    </ul>
 	  </div>
 	</footer>

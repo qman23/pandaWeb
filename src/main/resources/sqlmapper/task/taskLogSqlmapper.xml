@@ -27,4 +27,7 @@
 		delete from <include refid="defaultSchema" />.<include refid="TASK_LOG" /> TL where TL.LOG_ID=#{logId}
 		</delete>
 		
+		<select id="findTaskLogByLogId" parameterType="int" resultMap="TaskLog">
+		select TL.* from <include refid="defaultSchema" />.<include refid="TASK_LOG" /> TL where TL.LOG_ID=#{logId}
+		</select>
 </mapper>

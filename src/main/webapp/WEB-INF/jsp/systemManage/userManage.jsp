@@ -98,22 +98,6 @@ function getUsers() {
 	}
 </script>
 </head>
-	window.operateEvents = {
-		'click .like' : function(e, value, row, index) {
-			$.ajax({
-				   type: &quot;get&quot;,
-				   url: &quot;&lt;%=basePath%&gt;/getTask.do&quot;,
-				   data: &quot;taskId=&quot;+row.taskId,
-				   success: function(msg){
-				     $('#modifyTask').find('.modal-body').html(msg);
-				   }
-				});
-		},
-		'click .remove' : function(e, value, row, index) {
-				$('#deleteTaskId').val(row.taskId);
-				$('#deleteModel').show();
-		}
-	};
 <body>
 	<div class="col-md-10 main">
 		<h2 class="sub-header">User Manage</h2>
