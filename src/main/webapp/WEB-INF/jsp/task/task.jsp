@@ -55,7 +55,6 @@
 					showRefresh : true,
 					minimumCountColumns : 2,
 					clickToSelect : true,
-					cardView : true,
 					columns : [ {
 						field : 'state',
 						checkbox : true
@@ -176,10 +175,14 @@
 								Group Name</small></label> <select class="form-control" id="taskGroupNameSelect"
 							style="width: auto">
 							<c:forEach items="${TaskGroupList}" var="taskGroup">
-								<c:if test="${taskGroup.groupId eq groupId }">
-									<option class="groupNameOption" selected id="${taskGroup.groupId}">${taskGroup.groupName}</option>
-								</c:if>
-								<option class="groupNameOption"  id="${taskGroup.groupId}">${taskGroup.groupName}</option>
+								<c:choose>
+									<c:when test="${taskGroup.groupId eq groupId }">
+										<option class="groupNameOption" selected id="${taskGroup.groupId}">${taskGroup.groupName}</option>
+									</c:when>
+									<c:otherwise>
+									 	<option class="groupNameOption"  id="${taskGroup.groupId}">${taskGroup.groupName}</option>
+									</c:otherwise>
+								</c:choose>
 							</c:forEach>
 						</select> 
 						<label for="TaskGroupName" class="control-label"><small>New

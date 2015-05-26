@@ -130,7 +130,7 @@ function getTasks() {
 	}
 </script>
 </head>
-logId<body>
+<body>
 <c:choose>
 		<c:when test="${not empty TaskGroupList}">
 			<div class="col-md-10 main">
@@ -140,7 +140,14 @@ logId<body>
 								Group Name</small></label> <select class="form-control" id="taskGroupNameSelect"
 							style="width: auto">
 							<c:forEach items="${TaskGroupList}" var="taskGroup">
-								<option class="groupNameOption" id="${taskGroup.groupId}">${taskGroup.groupName}</option>
+								<c:choose>
+									<c:when test="${taskGroup.groupId eq groupId }">
+										<option class="groupNameOption" selected id="${taskGroup.groupId}">${taskGroup.groupName}</option>
+									</c:when>
+									<c:otherwise>
+									 	<option class="groupNameOption"  id="${taskGroup.groupId}">${taskGroup.groupName}</option>
+									</c:otherwise>
+								</c:choose>
 							</c:forEach>
 						</select> <label for="TaskGroupName" class="control-label"><small>Execute
 								Task</small></label> <input class=" btn btn-default" type="button" value="Execute" id="executeTask"

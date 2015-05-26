@@ -68,7 +68,13 @@ public class TaskController extends ActionController implements Serializable {
 
 	@RequestMapping(value = "/home/saveTask.do", method = RequestMethod.POST)
 	public ModelAndView saveTask(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("redirect:/home/taskManage.do");
+		ModelAndView mv = new ModelAndView("task/task");
+		int userId = (Integer) getSeesionValue("CurrentUserId");
+		mv.addObject("TaskGroupList",
+				taskGroupService.findTaskGroupByUserId(userId));
+		mv.addObject("taskClass", "active");
+		mv.addObject("TKcurrentTab", "in");
+		
 		Task t=getTaskFromRequest(request);
 		mv.addObject("groupId",request.getParameter("taskGroupId"));
 		taskService.saveTask(t);
@@ -121,7 +127,11 @@ public class TaskController extends ActionController implements Serializable {
 	
 	@RequestMapping(value = "/home/executeTaskBygroupId.do", method = RequestMethod.GET)
 	public ModelAndView executeTask(int groupId){
-		ModelAndView mv = new ModelAndView("redirect:/home/taskExecute.do");
+		ModelAndView mv = new ModelAndView("task/taskExecute");
+		int userId = (Integer) getSeesionValue("CurrentUserId");
+		mv.addObject("TaskGroupList",
+				taskGroupService.findTaskGroupByUserId(userId));
+		mv.addObject("groupId",groupId);
 		mv.addObject("taskRunClass", "active");
 		mv.addObject("TKcurrentTab", "in");
 		try {
