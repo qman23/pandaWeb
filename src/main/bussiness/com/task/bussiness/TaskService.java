@@ -9,6 +9,8 @@ import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -78,6 +80,7 @@ public class TaskService {
 		taskLogDao.addTaskLog(tl);
 	}
 	
+	@Cacheable(value="taskLogCache")
 	public List<TaskLog> findTaskLogsByGroupId(int groupId){
 		return taskLogDao.findTaskLogsByGroupId(groupId);
 	}
@@ -109,6 +112,7 @@ public class TaskService {
 	public TaskLog findTaskLogByLogId(int logId){
 		return taskLogDao.findTaskLogByLogId(logId);
 	}
+	
 	
 	public void executeTask(int groupId) throws BusinessException{
 		ExecuteEngine executeEngine=new ExecuteEngine(findTasksByGroupId(groupId));

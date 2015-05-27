@@ -45,7 +45,7 @@ window.operateEvents = {
 				});
 		},
 		'click .remove' : function(e, value, row, index) {
-			$('#deleteLogBtn').attr("href","deleteTaskLog.do?logId="+row.logId);
+			$('#deleteLogBtn').attr("href","deleteTaskLog.do?logId="+row.logId+"&groupId="+row.groupId);
 		}
 };
 function tasklogFormatter(value, row, index){
@@ -53,6 +53,13 @@ function tasklogFormatter(value, row, index){
 	 return "<textarea style='width:1000px;height:250px;font-size: 12px;color: white;background: seagreen;'>"+value+"</textarea>";
  	}else{
  	  return "<textarea style='width:1000px;height:250px;font-size: 12px;color: white;background: grey;'>"+value+"</textarea>";
+ 	}
+}
+function taskStatusFormatter(value, row, index){
+	if(row.taskStatus==1){
+	 return "Success";
+ 	}else{
+ 	  return "Failed";
  	}
 }
 function operateFormatter(value, row, index) {
@@ -116,7 +123,8 @@ function getTasks() {
 						title : 'Task Status',
 						align : 'center',
 						valign : 'middle',
-						sortable : true
+						sortable : true,
+						formatter:taskStatusFormatter
 					},{
 						field : 'operate',
 						title : 'operate',

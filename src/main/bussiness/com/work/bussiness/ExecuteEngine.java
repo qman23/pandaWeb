@@ -12,6 +12,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.apache.log4j.Logger;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
 
 import com.bussiness.exception.BusinessException;
 import com.entity.work.Task;
@@ -67,10 +69,12 @@ public class ExecuteEngine extends ExecuteFactory implements Callable<Map>{
 		Map result=null;
 		int i=tasks.size();
 		int j=0;
+		int groupId=0;
 		try {
 			for(Task t:tasks){
 						result=this.excuteTask(t);
 						j++;
+						groupId=t.getGroupId();
 			}
 		} catch (BusinessException e) {
 			log.error("Task execute error--task name:"+tasks.get(j).getTaskName()+",task catalog name:"+tasks.get(j).getCatalogName()+",task parameter:"+tasks.get(j).getTaskParameter()+",Exception details:"+e.getMessage());
@@ -88,14 +92,16 @@ public class ExecuteEngine extends ExecuteFactory implements Callable<Map>{
 			}
 			taskService.addTaskLog(tasks.get(0), sb.toString(), PandaConstants.TASK_SUCCESS);
 		}
-		cleanUp();
+		cleanUp(groupId);
 		return result;
 	}
 
 	/**
-	 * clean up relative resource
+	 * clean up relative resource and cache
 	 */
-	private void cleanUp(){
+	private void cleanUp(int groupId){
+		CacheManager cacheManager=(CacheManager)SpringUtil.getBean("cacheManager");
+		cacheManager.getCache("taskLogCache").evict(groupId);
 		SSHUtil sSHUtil=(SSHUtil) SpringUtil.getBean("sSHUtil");
 		try {
 			sSHUtil.disconnect();

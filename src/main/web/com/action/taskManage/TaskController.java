@@ -90,9 +90,14 @@ public class TaskController extends ActionController implements Serializable {
 	
 	@RequestMapping(value = "/home/updateTask.do", method = RequestMethod.POST)
 	public ModelAndView updateTask(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("redirect:/home/taskManage.do");
+		ModelAndView mv = new ModelAndView("task/task");
+		int userId = (Integer) getSeesionValue("CurrentUserId");
+		mv.addObject("TaskGroupList",
+				taskGroupService.findTaskGroupByUserId(userId));
 		Task t=getTaskFromRequest(request);
 		mv.addObject("groupId",request.getParameter("taskGroupId"));
+		mv.addObject("taskClass", "active");
+		mv.addObject("TKcurrentTab", "in");
 		taskService.updateTask(t);
 		return mv;
 	}
@@ -143,8 +148,12 @@ public class TaskController extends ActionController implements Serializable {
 	}
 	
 	@RequestMapping(value = "/home/deleteTaskLog.do", method = RequestMethod.GET)
-	public ModelAndView deleteTaskLog(int logId){
-		ModelAndView mv = new ModelAndView("redirect:/home/taskExecute.do");
+	public ModelAndView deleteTaskLog(int logId,int groupId){
+		ModelAndView mv = new ModelAndView("task/taskExecute");
+		int userId = (Integer) getSeesionValue("CurrentUserId");
+		mv.addObject("TaskGroupList",
+				taskGroupService.findTaskGroupByUserId(userId));
+		mv.addObject("groupId",groupId);
 		mv.addObject("taskRunClass", "active");
 		mv.addObject("TKcurrentTab", "in");
 		taskService.deleteTaskLogByLogId(logId);
@@ -185,7 +194,7 @@ public class TaskController extends ActionController implements Serializable {
 			awt.setUrl(request.getParameter("serverUrl"));
 			awt.setUserName(Utils.isStringNull(request.getParameter("userName"))?"":request.getParameter("userName"));
 			String password=request.getParameter("userPassword");
-			awt.setPassword(Utils.isStringNull(password)?"":password);
+			awt.setPassword(Utils.isStringNull(password)?"":Utils.encrypt(password));
 			awt.setCatalogName(PandaConstants.ACCESSWEB_CATALOG_NAME);
 			t=awt;
 		}
