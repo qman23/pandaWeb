@@ -189,7 +189,7 @@ function getTasks() {
 				</div>
 				<div class="modal-body" style="height: 700px">
 					<img id="loading" alt="Loading" src="../style/img/loading.gif">
-					<textarea class="modal-content-textarea" style="display:none;width:100%;height:100%" disabled="disabled">
+					<textarea class="modal-content-textarea" style="display:none;width:100%;height:100%;font-size:12px;"  disabled="disabled">
 					
 					</textarea>
 				</div>

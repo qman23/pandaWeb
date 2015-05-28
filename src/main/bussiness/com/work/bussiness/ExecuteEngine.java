@@ -72,16 +72,20 @@ public class ExecuteEngine extends ExecuteFactory implements Callable<Map>{
 		int groupId=0;
 		try {
 			for(Task t:tasks){
-						result=this.excuteTask(t);
-						j++;
 						groupId=t.getGroupId();
+						result=this.excuteTask(t);
+						j++;		
 			}
 		} catch (BusinessException e) {
-			log.error("Task execute error--task name:"+tasks.get(j).getTaskName()+",task catalog name:"+tasks.get(j).getCatalogName()+",task parameter:"+tasks.get(j).getTaskParameter()+",Exception details:"+e.getMessage());
-			taskService.addTaskLog(tasks.get(j), e.getMessage(), PandaConstants.TASK_FAILED);
+			String errorMessage="Task execute error--task name:"+tasks.get(j).getTaskName()+",task catalog name:"+tasks.get(j).getCatalogName()+",task parameter:"+tasks.get(j).getTaskParameter()+",Exception details:"+e.getMessage();
+			log.error(errorMessage);
+			taskService.addTaskLog(tasks.get(j), errorMessage, PandaConstants.TASK_FAILED);
 		} catch (Exception e) {
-			log.error("Task execute error--task name:"+tasks.get(j).getTaskName()+",task catalog name:"+tasks.get(j).getCatalogName()+",task parameter:"+tasks.get(j).getTaskParameter()+",Exception details:"+e.getMessage());
-			taskService.addTaskLog(tasks.get(j), e.getMessage(), PandaConstants.TASK_FAILED);
+			String errorMessage="Task execute error--task name:"+tasks.get(j).getTaskName()+",task catalog name:"+tasks.get(j).getCatalogName()+",task parameter:"+tasks.get(j).getTaskParameter()+",Exception details:"+e.getMessage();
+			log.error(errorMessage);
+			taskService.addTaskLog(tasks.get(j),errorMessage, PandaConstants.TASK_FAILED);
+		}finally{
+			cleanUp();
 		}
 		if(i==j){
 			StringBuffer sb=new StringBuffer();
@@ -92,16 +96,13 @@ public class ExecuteEngine extends ExecuteFactory implements Callable<Map>{
 			}
 			taskService.addTaskLog(tasks.get(0), sb.toString(), PandaConstants.TASK_SUCCESS);
 		}
-		cleanUp(groupId);
 		return result;
 	}
 
 	/**
 	 * clean up relative resource and cache
 	 */
-	private void cleanUp(int groupId){
-		CacheManager cacheManager=(CacheManager)SpringUtil.getBean("cacheManager");
-		cacheManager.getCache("taskLogCache").evict(groupId);
+	private void cleanUp(){
 		SSHUtil sSHUtil=(SSHUtil) SpringUtil.getBean("sSHUtil");
 		try {
 			sSHUtil.disconnect();

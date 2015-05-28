@@ -9,6 +9,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
@@ -19,6 +20,7 @@ import com.entity.work.Task;
 import com.entity.work.TaskLog;
 import com.task.dao.TaskDao;
 import com.task.dao.TaskLogDao;
+import com.utils.business.SpringUtil;
 import com.utils.business.Utils;
 import com.work.bussiness.ExecuteEngine;
 
@@ -78,6 +80,8 @@ public class TaskService {
 	
 	public void addTaskLog(TaskLog tl){
 		taskLogDao.addTaskLog(tl);
+		CacheManager cacheManager=(CacheManager)SpringUtil.getBean("cacheManager");
+		cacheManager.getCache("taskLogCache").evict(tl.getGroupId());
 	}
 	
 	@Cacheable(value="taskLogCache")
@@ -99,6 +103,7 @@ public class TaskService {
 		return taskLogDao.findTaskLogsByGroupId(groupId);
 	}
 	
+	@CacheEvict(value="taskLogCache")
 	public void deleteTaskLogByGroupId(int groupId){
 		taskLogDao.deleteTaskLogsByGroupId(groupId);
 	}
@@ -106,7 +111,9 @@ public class TaskService {
 	public void deleteTaskLogByLogId(int logId){
 		TaskLog t=new TaskLog();
 		t.setLogId(logId);
-		taskLogDao.deleteTaskLog(t);
+		CacheManager cacheManager=(CacheManager)SpringUtil.getBean("cacheManager");
+		cacheManager.getCache("taskLogCache").evict(findTaskLogByLogId(logId).getGroupId());
+		taskLogDao.deleteTaskLog(t);	
 	}
 	
 	public TaskLog findTaskLogByLogId(int logId){
